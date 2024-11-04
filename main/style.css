@@ -66,9 +66,7 @@ body { margin: 0; }
     margin-top: 44px;
 }
 .team-stars-container { display: flex; }
-#team-stars-container-right {
-    flex-direction: row-reverse;
-}
+#team-stars-container-right { flex-direction: row-reverse; }
 .team-star {
     width: 46px;
     height: 21px;
@@ -76,9 +74,7 @@ body { margin: 0; }
     background-color: black;
     margin: 0 18px 0 18px
 }
-.team-star-fill {
-    background-color: var(--green);
-}
+.team-star-fill { background-color: var(--green); }
 
 /* Bean */
 .bean {
@@ -91,6 +87,15 @@ body { margin: 0; }
 }
 #bean-left { left: -273px; }
 #bean-right { right: -273px; }
+
+
+/* Logo */
+.logo {
+    position: absolute;
+    top: 107px;
+    right: 1974px;
+    width: 312px;
+}
 
 /* Round Information */
 .round-information-container {
@@ -111,3 +116,25 @@ body { margin: 0; }
     border-radius: 7px;
     background-color: var(--green);
 }
+
+/* Score Text */
+.score-text {
+    position: absolute;
+    top: 1865px;
+    font-size: 46px;
+    line-height: 61px;
+    color: white;
+}
+#score-text-left { left: 74px; }
+#score-text-right { right: 74px; }
+
+/* Play Score */
+.play-score {
+    position: absolute;
+    top: 1918px;
+    font-size: 74px;
+    line-height: 98px;
+    color: white;
+}
+#play-score-left { left: 68px; }
+#play-score-right { right: 68px; }
