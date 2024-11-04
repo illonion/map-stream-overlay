@@ -91,3 +91,23 @@ body { margin: 0; }
 }
 #bean-left { left: -273px; }
 #bean-right { right: -273px; }
+
+/* Round Information */
+.round-information-container {
+    position: absolute;
+    left: 1984px;
+    top: 98px;
+}
+.round-name {
+    font-size: 58px;
+    line-height: 76px;
+    color: white;
+}
+.round-information-bean {
+    position: absolute; 
+    top: 93px;
+    width: 429px;
+    height: 14px;
+    border-radius: 7px;
+    background-color: var(--green);
+}
