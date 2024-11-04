@@ -55,3 +55,26 @@ body { margin: 0; }
 }
 #team-name-left { top: 80px; left: 129px; }
 #team-name-right { top: 80px; right: 129px;}
+
+/* Stars */
+.team-stars-section {
+    display: flex;
+    justify-content: space-between;
+    width: 3606px;
+    margin: auto;
+    margin-top: 44px;
+}
+.team-stars-container { display: flex; }
+#team-stars-container-right {
+    flex-direction: row-reverse;
+}
+.team-star {
+    width: 46px;
+    height: 21px;
+    border-radius: 11px;
+    background-color: black;
+    margin: 0 18px 0 18px
+}
+.team-star-fill {
+    background-color: var(--green);
+}
