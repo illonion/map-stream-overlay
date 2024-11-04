@@ -152,3 +152,49 @@ body { margin: 0; }
 .score-bar-fill { background-color: var(--green); }
 .score-bar-left { left: var(--scoreDetailLeftRight); }
 .score-bar-right { right: var(--scoreDetailLeftRight); }
+
+/* Now Playing Stats Container */
+.now-playing-stats-container {
+    position: absolute;
+    top: 1806px;
+    right: 2370px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    color: white;
+    text-align: right;
+}
+/* Now Playing Stats */
+.now-playing-stats { margin-left: 60px; }
+.now-playing-stats-bottom { margin-top: -7px; }
+/* Now Playing Text */
+.now-playing-stats-text {
+    font-size: 3rem;
+    line-height: 4rem;
+}
+.now-playing-stats-number {
+    font-size: 75px;
+    line-height: 99px;
+    margin-left: 5px;
+    font-variant-numeric: tabular-nums;
+}
+#now-playing-stats-text-bpm { margin-right: 15px; }
+
+/* Now Playing Stats Underscore */
+.now-playing-stats-underscores-container {
+    position: absolute;
+    top: 1870px;
+    right: 2368px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: end;
+}
+.now-playing-stats-underscore {
+    width: 222px;
+    height: 25px;
+    border-radius: 12px;
+    background-color: var(--red);
+    margin: 0 0 67px 39px;
+}
+#now-playing-stats-underscore-bpm {
+    width: 257px;
+}
