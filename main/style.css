@@ -6,11 +6,13 @@
 
 body { margin: 0; }
 .main {
+    position: relative;
     margin: 0;
     width: 3840px;
     height: 2160px;
     background-image: url("static/background.png");
     font-family: "Reddit Mono";
+    font-weight: 800;
 }
 
 /* Team colour */
@@ -25,10 +27,10 @@ body { margin: 0; }
     font-size: 2rem;
     line-height: 42px;
     color: var(--green);
-    font-weight: 800;
 }
 
 /* Team Name Highlight */
+/* Max width is 671px; */
 .team-name-highlight-section {
     width: 3618px;
     display: flex;
@@ -43,3 +45,13 @@ body { margin: 0; }
 }
 #team-name-highlight-left { background-color: var(--red); }
 #team-name-highlight-right { background-color: var(--blue); }
+
+/* Team Name */
+.team-name {
+    position: absolute;
+    font-size: 75px;
+    line-height: 98px;
+    color: white;
+}
+#team-name-left { top: 80px; left: 129px; }
+#team-name-right { top: 80px; right: 129px;}

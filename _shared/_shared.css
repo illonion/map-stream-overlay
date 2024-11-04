@@ -1,29 +1,29 @@
 @font-face {
     font-family: "Reddit Mono";
-    src: url("../fonts/RedditMono-ExtraBold.woff2");
+    src: url("../fonts/RedditMono-ExtraBold.ttf");
     font-weight: 800;
 }
 
 @font-face {
     font-family: "Reddit Mono";
-    src: url("../fonts/RedditMono-Bold.woff2");
+    src: url("../fonts/RedditMono-Bold.ttf");
     font-weight: 700;
 }
 
 @font-face {
     font-family: "Reddit Mono";
-    src: url("../fonts/RedditMono-SemiBold.woff2");
+    src: url("../fonts/RedditMono-SemiBold.ttf");
     font-weight: 600;
 }
 
 @font-face {
     font-family: "Reddit Mono";
-    src: url("../fonts/RedditMono-Regular.woff2");
+    src: url("../fonts/RedditMono-Regular.ttf");
     font-weight: 400;
 }
 
 @font-face {
     font-family: "Reddit Mono";
-    src: url("../fonts/RedditMono-Light.woff2");
+    src: url("../fonts/RedditMono-Light.ttf");
     font-weight: 300;
 }
