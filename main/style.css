@@ -1,6 +1,23 @@
+body { margin: 0; }
 .main {
     margin: 0;
     width: 3840px;
     height: 2160px;
-    background-image: url("static/background.png")   
+    background-image: url("static/background.png");
+    font-family: "Reddit Mono";
+}
+
+/* Team colour */
+.team-colour-section {
+    width: 3559px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 46px;
+    margin: auto;
+}
+.team-colour {
+    font-size: 2rem;
+    line-height: 42px;
+    color: #c2ff15;
+    font-weight: 800;
 }
