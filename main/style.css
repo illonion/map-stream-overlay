@@ -2,6 +2,7 @@
     --green: #c2ff15;
     --red: #ff29ad;
     --blue: #1f6bff;
+    --scoreDetailLeftRight: 70px;
 }
 
 body { margin: 0; }
@@ -125,16 +126,29 @@ body { margin: 0; }
     line-height: 61px;
     color: white;
 }
-#score-text-left { left: 74px; }
-#score-text-right { right: 74px; }
+#score-text-left { left: var(--scoreDetailLeftRight); }
+#score-text-right { right: var(--scoreDetailLeftRight); }
 
 /* Play Score */
 .play-score {
     position: absolute;
     top: 1918px;
-    font-size: 74px;
+    font-size: var(--scoreDetailLeftRight);
     line-height: 98px;
     color: white;
 }
-#play-score-left { left: 68px; }
-#play-score-right { right: 68px; }
+#play-score-left { left: var(--scoreDetailLeftRight); }
+#play-score-right { right: var(--scoreDetailLeftRight); }
+
+/* Score Bar */
+.score-bar {
+    position: absolute;
+    top: 2051px;
+    width: 1400px;
+    height: 34px;
+    border-radius: 17px;
+}
+.score-bar-container { background-color: white; }
+.score-bar-fill { background-color: var(--green); }
+.score-bar-left { left: var(--scoreDetailLeftRight); }
+.score-bar-right { right: var(--scoreDetailLeftRight); }
