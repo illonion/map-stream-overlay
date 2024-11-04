@@ -195,6 +195,32 @@ body { margin: 0; }
     background-color: var(--red);
     margin: 0 0 67px 39px;
 }
-#now-playing-stats-underscore-bpm {
-    width: 257px;
+#now-playing-stats-underscore-bpm { width: 257px; }
+
+/* Current Map */
+.now-playing-map-background {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 668px;
+    height: 372px;
+    border-radius: 34px;
+    background-image: url("https://assets.ppy.sh/beatmaps/789103/covers/cover.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.now-playing-current-map-text {
+    position: absolute;
+    top: 1770px;
+    left: 1625px;
+    background-color: var(--red);
+    color: white;
+    font-size: 31px;
+    line-height: 42px;
+    width: 248px;
+    height: 42px;
+    border-radius: 21px;
+    text-align: center;
+    transform: rotate(-3deg);
 }
