@@ -224,3 +224,52 @@ body { margin: 0; }
     text-align: center;
     transform: rotate(-3deg);
 }
+
+/* Now Playing Text Information */
+.now-playing-song-title {
+    position: absolute;
+    top: 1810px;
+    left: 2370px;
+    font-size: 75px;
+    line-height: 99px;
+    color: white;
+}
+.now-playing-artist {
+    position: absolute;
+    top: 1902px;
+    left: 2370px;
+    font-size: 42px;
+    line-height: 55px;
+    color: white;
+}
+.now-playing-mapper-text {
+    position: absolute;
+    top: 1974px;
+    left: 2370px;
+    border-radius: 27px;
+    background-color: var(--blue);
+    color: white;
+    width: 216px;
+    height: 53px;
+    line-height: 53px;
+    text-align: center;
+    font-size: 42px;
+    font-weight: 700;
+}
+.now-playing-mapper-circle {
+    position: absolute;
+    top: 1994px;
+    left: 2630px;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: white;
+}
+.now-playing-mapper-name {
+    position: absolute; 
+    top: 1974px;
+    left: 2686px;
+    font-size: 42px;
+    line-height: 55px;
+    color: white;
+}
