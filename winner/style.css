@@ -1,18 +1,60 @@
+:root {
+    --textLeft: 2226px
+}
+
 body { margin: 0; }
 .main {
     margin: 0;
     width: 3840px;
     height: 2160px;
-    background-image: url("static/background.png")
+    background-image: url("static/background.png");
+    font-family: "Reddit Mono";
+    font-weight: 800;
+    color: white;
 }
 
 /* Winner Text */
 .winner-underline {
     position: absolute;
     top: 833px;
-    left: 2195px;
+    left: calc(var(--textLeft) - 31px);
     width: 862px;
     height: 73px;
     border-radius: 37px;
     background-color: var(--red);
+}
+.winner-text {
+    position: absolute; 
+    top: 632px;
+    left: var(--textLeft);
+    font-size: 236px;
+}
+
+/* Team Colour */
+.team-colour {
+    position: absolute;
+    top: 1060px;
+    left: var(--textLeft);
+    background-color: var(--blue);
+    font-size: 66px;
+    font-weight: 700;
+    text-align: center;
+    text-wrap: nowrap;
+    padding: 0 35px;
+}
+
+/* Team Name */
+.team-name {
+    position: absolute;
+    top: 1171px;
+    left: var(--textLeft);
+    height: 141px;
+    line-height: 141px;
+    background-color: whites;
+    color: #282828;
+    font-size: 120px;
+    font-weight: 700;
+    text-align: center;
+    text-wrap: nowrap;
+    padding: 0 37px;
 }
