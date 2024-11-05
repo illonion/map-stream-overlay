@@ -72,7 +72,7 @@ body { margin: 0; }
     width: 46px;
     height: 21px;
     border-radius: 11px;
-    background-color: black;
+    background-color: white;
     margin: 0 18px 0 18px
 }
 .team-star-fill { background-color: var(--green); }

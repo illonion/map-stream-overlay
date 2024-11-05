@@ -23,6 +23,11 @@ const teamNameHighlightLeftEl = document.getElementById("team-name-highlight-lef
 const teamNameHighlightRightEl = document.getElementById("team-name-highlight-right");
 let currentTeamNameLeft, currentTeamNameRight
 
+// Star Information
+const teamStarsContainerLeftEl = document.getElementById("team-stars-container-left")
+const teamStarsContainerRightEl = document.getElementById("team-stars-container-right")
+let currentBestOf, currentFirstTo, currnetLeftStars, currentRightStars
+
 socket.onmessage = event => {
     const data = JSON.parse(event.data);
     console.log(data);
@@ -30,6 +35,33 @@ socket.onmessage = event => {
     // Update team names
     currentTeamNameLeft = updateTeamName(currentTeamNameLeft, data.tourney.manager.teamName.left, teamNameLeftEl, teamNameHighlightLeftEl);
     currentTeamNameRight = updateTeamName(currentTeamNameRight, data.tourney.manager.teamName.right, teamNameRightEl, teamNameHighlightRightEl);
+
+    // Set star information
+    if (currentBestOf !== data.tourney.manager.bestOF || currnetLeftStars !== data.tourney.manager.stars.left ||
+        currentRightStars !== data.tourney.manager.stars.right
+    ) {
+        currentBestOf = data.tourney.manager.bestOF;
+        currentFirstTo = Math.ceil(currentBestOf / 2);
+        currnetLeftStars = data.tourney.manager.stars.left;
+        currentRightStars = data.tourney.manager.stars.right;
+
+        teamStarsContainerLeftEl.innerHTML = "";
+        teamStarsContainerRightEl.innerHTML = "";
+        let i = 0;
+        for (i; i < currnetLeftStars; i++) teamStarsContainerLeftEl.append(createStar(true));
+        for (i; i < currentFirstTo; i++) teamStarsContainerLeftEl.append(createStar(false));
+        i = 0;
+        for (i; i < currentRightStars; i++) teamStarsContainerRightEl.append(createStar(true));
+        for (i; i < currentFirstTo; i++) teamStarsContainerRightEl.append(createStar(false));
+
+        // Create Star
+        function createStar(fillStar) {
+            const newStar = document.createElement("div");
+            newStar.classList.add("team-star");
+            if (fillStar) newStar.classList.add("team-star-fill");
+            return newStar;
+        }
+    }
 }
 
 // Update team name
