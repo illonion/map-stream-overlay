@@ -42,6 +42,21 @@ const frameTime = 1000 / fps;
 let currentPlayScoreLeft = 0, currentPlayScoreRight = 0, animationFrame;
 let scoreBarMaxScore = 1000000
 
+// Stats
+const nowPlayingStatsCSEl = document.getElementById("now-playing-stats-cs")
+const nowPlayingStatsODEl = document.getElementById("now-playing-stats-od")
+const nowPlayingStatsBPMEl = document.getElementById("now-playing-stats-bpm")
+const nowPlayingStatsAREl = document.getElementById("now-playing-stats-ar")
+let currentBeatmapId, currentBeatmapMd5, updateStats = false
+
+// Now Playing Map Background
+const nowPlayingMapBackgroundEl = document.getElementById("now-playing-map-background")
+
+// Now Playing Metadata
+const nowPlayingSongTitleEl = document.getElementById("now-playing-song-title")
+const nowPlayingArtist = document.getElementById("now-playing-artist")
+const nowPlayingMapperName = document.getElementById("now-playing-mapper-name")
+
 socket.onmessage = event => {
     const data = JSON.parse(event.data);
     console.log(data);
@@ -96,8 +111,58 @@ socket.onmessage = event => {
 
     // Score animation
     if (scoreVisibility) {
-        animateScore(currentPlayScoreLeft, data.tourney.manager.gameplay.score.left, playScoreLeftEl, scoreBarLeftFillEl)
-        animateScore(currentPlayScoreRight, data.tourney.manager.gameplay.score.right, playScoreRightEl, scoreBarRightfillEl)
+        animateScore(currentPlayScoreLeft, data.tourney.manager.gameplay.score.left, playScoreLeftEl, scoreBarLeftFillEl);
+        animateScore(currentPlayScoreRight, data.tourney.manager.gameplay.score.right, playScoreRightEl, scoreBarRightfillEl);
+    }
+
+    // Beatmap information
+    if (currentBeatmapId !== data.menu.bm.id || currentBeatmapMd5 !== data.menu.bm.md5) {
+        currentBeatmapId = data.menu.bm.id;
+        currentBeatmapMd5 = data.menu.bm.md5;
+        setTimeout(() => updateStats = true, 250);
+    }
+
+    // Update map
+    if (updateStats) {
+        const currentMap = allBeatmaps.find(map => currentBeatmapId === map.beatmapID)
+
+        // Stats
+        if (currentMap) {
+            nowPlayingStatsCSEl.innerText = currentMap.cs.toFixed(1);
+            nowPlayingStatsODEl.innerText = currentMap.od.toFixed(1);
+            nowPlayingStatsBPMEl.innerText = Math.round(currentMap.bpm).toString().padStart(3, "0");
+            nowPlayingStatsAREl.innerText = currentMap.ar.toFixed(1);
+        } else {
+            nowPlayingStatsCSEl.innerText = data.menu.bm.stats.memoryCS.toFixed(1);
+            nowPlayingStatsODEl.innerText = data.menu.bm.stats.memoryOD.toFixed(1);
+            nowPlayingStatsBPMEl.innerText = Math.round(data.menu.bm.stats.BPM.common).toString().padStart(3, "0");
+            nowPlayingStatsAREl.innerText = data.menu.bm.stats.memoryAR.toFixed(1);
+        }
+
+        // Background Image
+        data.menu.bm.path.full = data.menu.bm.path.full.replace(/#/g, '%23').replace(/%/g, '%25').replace(/\\/g, '/');
+    
+        // Check if background image exists
+        const imageURL = `http://${location.host}/Songs/${data.menu.bm.path.full}?a=${Math.random(10000)}`;
+        function checkIfPathExists(url, callback) {
+            const img = new Image();
+            img.onload = () => callback(true); 
+            img.onerror = () => callback(false);  
+            img.src = url;  
+        }
+
+        // Check if the image exists
+        checkIfPathExists(imageURL, (exists) => {
+            if (exists) nowPlayingMapBackgroundEl.style.backgroundImage = `url('${imageURL}')`;
+            else nowPlayingMapBackgroundEl.style.backgroundImage = `url('https://assets.ppy.sh/beatmaps/${data.menu.bm.set}/covers/cover.jpg')`;
+        });
+
+        // Metadata
+        nowPlayingSongTitleEl.innerText = data.menu.bm.metadata.title
+        nowPlayingArtist.innerText = data.menu.bm.metadata.artist
+        nowPlayingMapperName.innerText = data.menu.bm.metadata.mapper
+        
+        updateStats = false
     }
 }
 

@@ -205,7 +205,7 @@ body { margin: 0; }
     transform: translateX(-50%);
     width: 668px;
     height: 372px;
-    border-radius: 34px;
+    border-radius: 34px 34px 0 0;
     background-image: url("https://assets.ppy.sh/beatmaps/789103/covers/cover.jpg");
     background-size: cover;
     background-position: center;
