@@ -28,6 +28,20 @@ const teamStarsContainerLeftEl = document.getElementById("team-stars-container-l
 const teamStarsContainerRightEl = document.getElementById("team-stars-container-right")
 let currentBestOf, currentFirstTo, currnetLeftStars, currentRightStars
 
+// Booleans
+let scoreVisibility, starVisibility
+
+// Play score information
+const playScoreLeftEl = document.getElementById("play-score-left");
+const playScoreRightEl = document.getElementById("play-score-right");
+const scoreBarLeftFillEl = document.getElementById("score-bar-left-fill");
+const scoreBarRightfillEl = document.getElementById("score-bar-right-fill");
+const animationDuration = 300;
+const fps = 24;
+const frameTime = 1000 / fps;
+let currentPlayScoreLeft = 0, currentPlayScoreRight = 0, animationFrame;
+let scoreBarMaxScore = 1000000
+
 socket.onmessage = event => {
     const data = JSON.parse(event.data);
     console.log(data);
@@ -62,6 +76,29 @@ socket.onmessage = event => {
             return newStar;
         }
     }
+
+    // Score visibility
+    if (scoreVisibility !== data.tourney.manager.bools.scoreVisible) {
+        scoreVisibility = data.tourney.manager.bools.scoreVisible
+    }
+    
+    // Star visibility
+    if (starVisibility !== data.tourney.manager.bools.starsVisible) {
+        starVisibility = data.tourney.manager.bools.starsVisible
+        if (starVisibility) {
+            teamStarsContainerLeftEl.style.display = "flex"
+            teamStarsContainerRightEl.style.display = "flex"
+        } else {
+            teamStarsContainerLeftEl.style.display = "none"
+            teamStarsContainerRightEl.style.display = "none"
+        }
+    }
+
+    // Score animation
+    if (scoreVisibility) {
+        animateScore(currentPlayScoreLeft, data.tourney.manager.gameplay.score.left, playScoreLeftEl, scoreBarLeftFillEl)
+        animateScore(currentPlayScoreRight, data.tourney.manager.gameplay.score.right, playScoreRightEl, scoreBarRightfillEl)
+    }
 }
 
 // Update team name
@@ -73,4 +110,32 @@ function updateTeamName(currentTeamName, newTeamName, teamNameEl, teamNameHighli
         teamNameHighlightEl.style.width = `${Math.min(newWidth, 671)}px`;
     }
     return currentTeamName;
+}
+
+// Function to animate score at 24fps
+function animateScore(currentScore, targetScore, scoreElement, scoreBarElement) {
+    // Calculate the difference and the number of frames
+    const frames = animationDuration / frameTime;
+    const scoreIncrement = (targetScore - currentScore) / frames;
+    
+    // Cancel any previous animation frame to reset the animation
+    cancelAnimationFrame(animationFrame);
+
+    // Define the function to update the score in each frame
+    function updateScore() {
+        currentScore += scoreIncrement;
+
+        // Avoid small precision errors and update display
+        if (currentScore >= targetScore) currentScore = targetScore;
+        scoreElement.innerText = Math.round(currentScore).toLocaleString();
+
+        // Set width of score bar
+        scoreBarElement.style.width = `${currentScore / scoreBarMaxScore * 1400}px`
+
+        // Continue or stop the animation
+        if (currentScore !== targetScore) animationFrame = requestAnimationFrame(updateScore);
+    }
+
+    // Start the animation
+    updateScore();
 }
