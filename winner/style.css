@@ -13,6 +13,14 @@ body { margin: 0; }
     color: white;
 }
 
+/* Logo */
+.logo {
+    position: absolute;
+    top: 417px;
+    left: calc(var(--textLeft) + 6px);
+    width: 310px;
+}
+
 /* Winner Text */
 .winner-underline {
     position: absolute;
