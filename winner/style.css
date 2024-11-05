@@ -14,11 +14,13 @@ body { margin: 0; }
     width: 1255px;
     height: 413px;
     border-radius: 0 0 68px 0;
-    overflow: hidden;
     font-family: "Reddit Mono";
     font-weight: 800;
     font-size: 2rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
+.chat::-webkit-scrollbar { display: none; }
 .chatMessageContainer { display: flex; }
 .messageUser { padding-right: 20px; }
 .chatMessage { color: white; }
