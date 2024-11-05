@@ -5,3 +5,20 @@ body { margin: 0; }
     height: 2160px;
     background-image: url("static/background.png")
 }
+
+/* Chat */
+.chat {
+    position: absolute;
+    top: 30px;
+    margin-left: 48px;
+    width: 1255px;
+    height: 413px;
+    border-radius: 0 0 68px 0;
+    overflow: hidden;
+    font-family: "Reddit Mono";
+    font-weight: 800;
+    font-size: 2rem;
+}
+.chatMessageContainer { display: flex; }
+.messageUser { padding-right: 20px; }
+.chatMessage { color: white; }
