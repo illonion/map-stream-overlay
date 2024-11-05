@@ -1,0 +1,18 @@
+body { margin: 0; }
+.main {
+    margin: 0;
+    width: 3840px;
+    height: 2160px;
+    background-image: url("static/background.png")
+}
+
+/* Winner Text */
+.winner-underline {
+    position: absolute;
+    top: 833px;
+    left: 2195px;
+    width: 862px;
+    height: 73px;
+    border-radius: 37px;
+    background-color: var(--red);
+}
