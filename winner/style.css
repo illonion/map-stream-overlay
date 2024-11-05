@@ -1,5 +1,6 @@
 :root {
-    --textLeft: 2226px
+    --textLeft: 2226px;
+    --teamIconSize: 989px;
 }
 
 body { margin: 0; }
@@ -11,6 +12,19 @@ body { margin: 0; }
     font-family: "Reddit Mono";
     font-weight: 800;
     color: white;
+}
+
+/* Team Icon */
+.team-icon {
+    position: absolute;
+    left: 572px;
+    top: 587px;
+    width: var(--teamIconSize);
+    height: var(--teamIconSize);
+    border-radius: calc(var(--teamIconSize) / 2);
+    background-image: url("https://wallpapers.com/images/hd/athah-anime-blue-506pjoe01k6jicbe.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
 /* Logo */
@@ -58,7 +72,7 @@ body { margin: 0; }
     left: var(--textLeft);
     height: 141px;
     line-height: 141px;
-    background-color: whites;
+    background-color: white;
     color: #282828;
     font-size: 120px;
     font-weight: 700;
