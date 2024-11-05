@@ -58,3 +58,20 @@ body { margin: 0; }
     text-wrap: nowrap;
     padding: 0 37px;
 }
+
+/* Player Names */
+.player-names {
+    position: absolute;
+    top: 1400px;
+    left: calc(var(--textLeft) + 27px);
+    display: flex;
+    flex-wrap: wrap;
+    width: 1036px;
+}
+.player-name {
+    font-size: 58px;
+    font-weight: 600;
+    min-width: 508px;
+    margin-top: -5px;
+    margin-right: 10px;
+}
