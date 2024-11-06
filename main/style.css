@@ -38,8 +38,8 @@ body { margin: 0; }
     height: 47px;
     border-radius: 1.5em;
 }
-#team-name-highlight-left { background-color: var(--red); }
-#team-name-highlight-right { background-color: var(--blue); }
+#team-name-highlight-left { background-color: var(--blue); }
+#team-name-highlight-right { background-color: var(--red); }
 
 /* Team Name */
 .team-name {
@@ -185,7 +185,7 @@ body { margin: 0; }
     width: 222px;
     height: 25px;
     border-radius: 12px;
-    background-color: var(--red);
+    background-color: var(--blue);
     margin: 0 0 67px 39px;
 }
 #now-playing-stats-underscore-bpm { width: 257px; }
@@ -207,7 +207,7 @@ body { margin: 0; }
     position: absolute;
     top: 1770px;
     left: 1625px;
-    background-color: var(--red);
+    background-color: var(--blue);
     color: white;
     font-size: 31px;
     line-height: 42px;
@@ -240,7 +240,7 @@ body { margin: 0; }
     top: 1974px;
     left: 2370px;
     border-radius: 27px;
-    background-color: var(--blue);
+    background-color: var(--red);
     color: white;
     width: 216px;
     height: 53px;

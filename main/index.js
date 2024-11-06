@@ -41,7 +41,7 @@ const fps = 24;
 const frameTime = 1000 / fps;
 let currentPlayScoreLeft = 0, currentPlayScoreRight = 0, animationFrame;
 const baseScoreBarMaxScore = 4000000
-let currentscoreBarMaxScore
+let currentScoreBarMaxScore
 const EZMultiplier = 2
 
 // Stats
@@ -137,16 +137,18 @@ socket.onmessage = event => {
 
             // Set the base score max depending on the mod
             switch (currentMap.mod) {
-                case "HD": currentscoreBarMaxScore = baseScoreBarMaxScore * 1.06; break;
-                case "HR": currentscoreBarMaxScore = baseScoreBarMaxScore * 1.1; break;
-                case "DT": currentscoreBarMaxScore = baseScoreBarMaxScore * 1.2; break;
-                default: currentscoreBarMaxScore = baseScoreBarMaxScore
+                case "HD": currentScoreBarMaxScore = baseScoreBarMaxScore * 1.06; break;
+                case "HR": currentScoreBarMaxScore = baseScoreBarMaxScore * 1.1; break;
+                case "DT": currentScoreBarMaxScore = baseScoreBarMaxScore * 1.2; break;
+                default: currentScoreBarMaxScore = baseScoreBarMaxScore
             }
         } else {
             nowPlayingStatsCSEl.innerText = data.menu.bm.stats.memoryCS.toFixed(1);
             nowPlayingStatsODEl.innerText = data.menu.bm.stats.memoryOD.toFixed(1);
             nowPlayingStatsBPMEl.innerText = Math.round(data.menu.bm.stats.BPM.common).toString().padStart(3, "0");
             nowPlayingStatsAREl.innerText = data.menu.bm.stats.memoryAR.toFixed(1);
+
+            currentScoreBarMaxScore = baseScoreBarMaxScore
         }
 
         // Background Image
@@ -180,7 +182,7 @@ socket.onmessage = event => {
 function updateTeamName(currentTeamName, newTeamName, teamNameEl, teamNameHighlightEl) {
     if (currentTeamName !== newTeamName) {
         currentTeamName = newTeamName;
-        teamNameEl.innerText = currentTeamNamef;
+        teamNameEl.innerText = currentTeamName;
         teamNameHighlightEl.style.width = `${teamNameEl.getBoundingClientRect().width + 42.5}px`;
     }
     return currentTeamName;
@@ -204,7 +206,7 @@ function animateScore(currentScore, targetScore, scoreElement, scoreBarElement) 
         scoreElement.innerText = Math.round(currentScore).toLocaleString();
 
         // Set width of score bar
-        scoreBarElement.style.width = `${Math.min(currentScore / currentscoreBarMaxScore * 1400, 1400)}px`
+        scoreBarElement.style.width = `${Math.min(currentScore / currentScoreBarMaxScore * 1400, 1400)}px`
 
         // Continue or stop the animation
         if (currentScore !== targetScore) animationFrame = requestAnimationFrame(updateScore);
