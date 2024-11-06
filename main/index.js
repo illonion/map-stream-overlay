@@ -40,7 +40,9 @@ const animationDuration = 300;
 const fps = 24;
 const frameTime = 1000 / fps;
 let currentPlayScoreLeft = 0, currentPlayScoreRight = 0, animationFrame;
-let scoreBarMaxScore = 1000000
+const baseScoreBarMaxScore = 4000000
+let currentscoreBarMaxScore
+const EZMultiplier = 2
 
 // Stats
 const nowPlayingStatsCSEl = document.getElementById("now-playing-stats-cs")
@@ -132,6 +134,14 @@ socket.onmessage = event => {
             nowPlayingStatsODEl.innerText = currentMap.od.toFixed(1);
             nowPlayingStatsBPMEl.innerText = Math.round(currentMap.bpm).toString().padStart(3, "0");
             nowPlayingStatsAREl.innerText = currentMap.ar.toFixed(1);
+
+            // Set the base score max depending on the mod
+            switch (currentMap.mod) {
+                case "HD": currentscoreBarMaxScore = baseScoreBarMaxScore * 1.06; break;
+                case "HR": currentscoreBarMaxScore = baseScoreBarMaxScore * 1.1; break;
+                case "DT": currentscoreBarMaxScore = baseScoreBarMaxScore * 1.2; break;
+                default: currentscoreBarMaxScore = baseScoreBarMaxScore
+            }
         } else {
             nowPlayingStatsCSEl.innerText = data.menu.bm.stats.memoryCS.toFixed(1);
             nowPlayingStatsODEl.innerText = data.menu.bm.stats.memoryOD.toFixed(1);
@@ -170,9 +180,8 @@ socket.onmessage = event => {
 function updateTeamName(currentTeamName, newTeamName, teamNameEl, teamNameHighlightEl) {
     if (currentTeamName !== newTeamName) {
         currentTeamName = newTeamName;
-        teamNameEl.innerText = currentTeamName;
-        const newWidth = teamNameEl.getBoundingClientRect().width + 42.5;
-        teamNameHighlightEl.style.width = `${Math.min(newWidth, 671)}px`;
+        teamNameEl.innerText = currentTeamNamef;
+        teamNameHighlightEl.style.width = `${teamNameEl.getBoundingClientRect().width + 42.5}px`;
     }
     return currentTeamName;
 }
@@ -195,7 +204,7 @@ function animateScore(currentScore, targetScore, scoreElement, scoreBarElement) 
         scoreElement.innerText = Math.round(currentScore).toLocaleString();
 
         // Set width of score bar
-        scoreBarElement.style.width = `${currentScore / scoreBarMaxScore * 1400}px`
+        scoreBarElement.style.width = `${Math.min(currentScore / currentscoreBarMaxScore * 1400, 1400)}px`
 
         // Continue or stop the animation
         if (currentScore !== targetScore) animationFrame = requestAnimationFrame(updateScore);
