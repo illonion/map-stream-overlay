@@ -114,7 +114,7 @@ socket.onmessage = event => {
     // Score animation
     if (scoreVisibility) {
         animateScore(currentPlayScoreLeft, data.tourney.manager.gameplay.score.left, playScoreLeftEl, scoreBarLeftFillEl);
-        animateScore(currentPlayScoreRight, data.tourney.manager.gameplay.score.right, playScoreRightEl, scoreBarRightfillEl);
+        animateScore(currentPlayScoreRight, 4000000, playScoreRightEl, scoreBarRightfillEl);
     }
 
     // Beatmap information
