@@ -16,25 +16,25 @@ async function getMappool() {
         case "FINALS": case "GRAND FINALS":
             currentBestOf = 13; break;
     }
-    currentFirstTo = Math.ceil(currentBestOf / 2)
+    currentFirstTo = Math.ceil(currentBestOf / 2);
     
-    createStarDisplay()
+    createStarDisplay();
 }
-getMappool()
+getMappool();
 
 // Update Star Count
 function updateStarCount(side, operation) {
     // Do operation
-    if (side === "left" && operation === "add") currentLeftStars++
-    if (side === "right" && operation === "add") currentRightStars++
-    if (side === "left" && operation === "minus") currentLeftStars--
-    if (side === "right" && operation === "minus") currentRightStars--
+    if (side === "left" && operation === "add") currentLeftStars++;
+    if (side === "right" && operation === "add") currentRightStars++;
+    if (side === "left" && operation === "minus") currentLeftStars--;
+    if (side === "right" && operation === "minus") currentRightStars--;
 
     // Check boundary
-    if (currentLeftStars < 0) currentLeftStars = 0
-    if (currentRightStars < 0) currentRightStars = 0
-    if (currentLeftStars > currentFirstTo) currentLeftStars = currentFirstTo
-    if (currentRightStars > currentFirstTo) currentRightStars = currentFirstTo
+    if (currentLeftStars < 0) currentLeftStars = 0;
+    if (currentRightStars < 0) currentRightStars = 0;
+    if (currentLeftStars > currentFirstTo) currentLeftStars = currentFirstTo;
+    if (currentRightStars > currentFirstTo) currentRightStars = currentFirstTo;
 
     createStarDisplay()
 }
@@ -61,10 +61,10 @@ function createStarDisplay() {
 
 // Reset star count
 function resetStars() {
-    currentLeftStars = 0
-    currentRightStars = 0
+    currentLeftStars = 0;
+    currentRightStars = 0;
 
-    createStarDisplay()
+    createStarDisplay();
 }
 
 // Socket Events
@@ -79,15 +79,15 @@ const teamNameLeftEl = document.getElementById("team-name-left");
 const teamNameRightEl = document.getElementById("team-name-right");
 const teamNameHighlightLeftEl = document.getElementById("team-name-highlight-left");
 const teamNameHighlightRightEl = document.getElementById("team-name-highlight-right");
-let currentTeamNameLeft, currentTeamNameRight
+let currentTeamNameLeft, currentTeamNameRight;
 
 // Star Information
-const teamStarsContainerLeftEl = document.getElementById("team-stars-container-left")
-const teamStarsContainerRightEl = document.getElementById("team-stars-container-right")
-let currentBestOf = 0, currentFirstTo = 0, currentLeftStars = 0, currentRightStars = 0
+const teamStarsContainerLeftEl = document.getElementById("team-stars-container-left");
+const teamStarsContainerRightEl = document.getElementById("team-stars-container-right");
+let currentBestOf = 0, currentFirstTo = 0, currentLeftStars = 0, currentRightStars = 0;
 
 // Booleans
-let scoreVisibility, starVisibility
+let scoreVisibility, starVisibility;
 
 // Play score information
 const playScoreLeftEl = document.getElementById("play-score-left");
@@ -98,41 +98,41 @@ const animationDuration = 300;
 const fps = 24;
 const frameTime = 1000 / fps;
 let currentPlayScoreLeft = 0, currentPlayScoreRight = 0, animationFrame;
-const baseScoreBarMaxScore = 4000000
-let currentScoreBarMaxScore
-const EZMultiplier = 2
+const baseScoreBarMaxScore = 4000000;
+let currentScoreBarMaxScore;
+const EZMultiplier = 2;
 
 // Stats
-const nowPlayingStatsCSEl = document.getElementById("now-playing-stats-cs")
-const nowPlayingStatsODEl = document.getElementById("now-playing-stats-od")
-const nowPlayingStatsBPMEl = document.getElementById("now-playing-stats-bpm")
-const nowPlayingStatsAREl = document.getElementById("now-playing-stats-ar")
-let currentBeatmapId, currentBeatmapMd5, updateStats = false
+const nowPlayingStatsCSEl = document.getElementById("now-playing-stats-cs");
+const nowPlayingStatsODEl = document.getElementById("now-playing-stats-od");
+const nowPlayingStatsBPMEl = document.getElementById("now-playing-stats-bpm");
+const nowPlayingStatsAREl = document.getElementById("now-playing-stats-ar");
+let currentBeatmapId, currentBeatmapMd5, updateStats = false;
 
 // Now Playing Map Background
-const nowPlayingMapBackgroundEl = document.getElementById("now-playing-map-background")
+const nowPlayingMapBackgroundEl = document.getElementById("now-playing-map-background");
 
 // Now Playing Metadata
-const nowPlayingSongTitleEl = document.getElementById("now-playing-song-title")
-const nowPlayingArtist = document.getElementById("now-playing-artist")
-const nowPlayingMapperName = document.getElementById("now-playing-mapper-name")
+const nowPlayingSongTitleEl = document.getElementById("now-playing-song-title");
+const nowPlayingArtist = document.getElementById("now-playing-artist");
+const nowPlayingMapperName = document.getElementById("now-playing-mapper-name");
 
 // IPC State
-let ipcState, pointAdded = false, updateStars = false
+let ipcState, pointAdded = false, updateStars = false;
 
 // Star button toggle
-const sidebarStarControlButtonToggleEl = document.getElementById("sidebar-star-control-button-toggle")
-let warmupMode = false
+const sidebarStarControlButtonToggleEl = document.getElementById("sidebar-star-control-button-toggle");
+let warmupMode = false;
 function starControlToggle() {
-    warmupMode = !warmupMode
+    warmupMode = !warmupMode;
     if (warmupMode) {
-        teamStarsContainerLeftEl.style.display = "none"
-        teamStarsContainerRightEl.style.display = "none"
-        sidebarStarControlButtonToggleEl.innerText = "Toggle Stars: OFF"
+        teamStarsContainerLeftEl.style.display = "none";
+        teamStarsContainerRightEl.style.display = "none";
+        sidebarStarControlButtonToggleEl.innerText = "Toggle Stars: OFF";
     } else {
-        teamStarsContainerLeftEl.style.display = "flex"
-        teamStarsContainerRightEl.style.display = "flex"
-        sidebarStarControlButtonToggleEl.innerText = "Toggle Stars: ON"
+        teamStarsContainerLeftEl.style.display = "flex";
+        teamStarsContainerRightEl.style.display = "flex";
+        sidebarStarControlButtonToggleEl.innerText = "Toggle Stars: ON";
     }
 }
 
@@ -220,24 +220,24 @@ socket.onmessage = event => {
         });
 
         // Metadata
-        nowPlayingSongTitleEl.innerText = data.menu.bm.metadata.title
-        nowPlayingArtist.innerText = data.menu.bm.metadata.artist
-        nowPlayingMapperName.innerText = data.menu.bm.metadata.mapper
+        nowPlayingSongTitleEl.innerText = data.menu.bm.metadata.title;
+        nowPlayingArtist.innerText = data.menu.bm.metadata.artist;
+        nowPlayingMapperName.innerText = data.menu.bm.metadata.mapper;
         
-        updateStats = false
+        updateStats = false;
     }
 
     // Check IPC state
     if (ipcState !== data.tourney.manager.ipcState) {
-        ipcState = data.tourney.manager.ipcState
-        if (ipcState === 4) setTimeout(() => updateStars = true, 500)
+        ipcState = data.tourney.manager.ipcState;
+        if (ipcState === 4) setTimeout(() => updateStars = true, 500);
     }
 
     // Update stars
     if (updateStars) {
-        if (warmupMode) return
-        if (currentPlayScoreLeft > currentPlayScoreRight) updateStarCount("left", "add")
-        else if (currentPlayScoreRight > currentPlayScoreLeft) updateStarCount("right", "add")
+        if (warmupMode) return;
+        if (currentPlayScoreLeft > currentPlayScoreRight) updateStarCount("left", "add");
+        else if (currentPlayScoreRight > currentPlayScoreLeft) updateStarCount("right", "add");
     }
 }
 
