@@ -6,8 +6,66 @@ async function getMappool() {
     const responseJson = await response.json();
     allBeatmaps = responseJson.beatmaps;
     roundNameEl.innerText = responseJson.roundName;
+
+    // Set best of and first to
+    switch (responseJson.roundName) {
+        case "ROUND OF 32": case "ROUND OF 16":
+            currentBestOf = 9; break;
+        case "QUARTERFINALS": case "SEMIFINALS":
+            currentBestOf = 11; break;
+        case "FINALS": case "GRAND FINALS":
+            currentBestOf = 13; break;
+    }
+    currentFirstTo = Math.ceil(currentBestOf / 2)
+    
+    createStarDisplay()
 }
 getMappool()
+
+// Update Star Count
+function updateStarCount(side, operation) {
+    // Do operation
+    if (side === "left" && operation === "add") currentLeftStars++
+    if (side === "right" && operation === "add") currentRightStars++
+    if (side === "left" && operation === "minus") currentLeftStars--
+    if (side === "right" && operation === "minus") currentRightStars--
+
+    // Check boundary
+    if (currentLeftStars < 0) currentLeftStars = 0
+    if (currentRightStars < 0) currentRightStars = 0
+    if (currentLeftStars > currentFirstTo) currentLeftStars = currentFirstTo
+    if (currentRightStars > currentFirstTo) currentRightStars = currentFirstTo
+
+    createStarDisplay()
+}
+
+// Create star display
+function createStarDisplay() {
+    teamStarsContainerLeftEl.innerHTML = "";
+    teamStarsContainerRightEl.innerHTML = "";
+    let i = 0;
+    for (i; i < currentLeftStars; i++) teamStarsContainerLeftEl.append(createStar(true));
+    for (i; i < currentFirstTo; i++) teamStarsContainerLeftEl.append(createStar(false));
+    i = 0;
+    for (i; i < currentRightStars; i++) teamStarsContainerRightEl.append(createStar(true));
+    for (i; i < currentFirstTo; i++) teamStarsContainerRightEl.append(createStar(false));
+
+    // Create Star
+    function createStar(fillStar) {
+        const newStar = document.createElement("div");
+        newStar.classList.add("team-star");
+        if (fillStar) newStar.classList.add("team-star-fill");
+        return newStar;
+    }
+}
+
+// Reset star count
+function resetStars() {
+    currentLeftStars = 0
+    currentRightStars = 0
+
+    createStarDisplay()
+}
 
 // Socket Events
 // Credits: VictimCrasher - https://github.com/VictimCrasher/static/tree/master/WaveTournament
@@ -26,7 +84,7 @@ let currentTeamNameLeft, currentTeamNameRight
 // Star Information
 const teamStarsContainerLeftEl = document.getElementById("team-stars-container-left")
 const teamStarsContainerRightEl = document.getElementById("team-stars-container-right")
-let currentBestOf, currentFirstTo, currnetLeftStars, currentRightStars
+let currentBestOf = 0, currentFirstTo = 0, currentLeftStars = 0, currentRightStars = 0
 
 // Booleans
 let scoreVisibility, starVisibility
@@ -59,6 +117,25 @@ const nowPlayingSongTitleEl = document.getElementById("now-playing-song-title")
 const nowPlayingArtist = document.getElementById("now-playing-artist")
 const nowPlayingMapperName = document.getElementById("now-playing-mapper-name")
 
+// IPC State
+let ipcState, pointAdded = false, updateStars = false
+
+// Star button toggle
+const sidebarStarControlButtonToggleEl = document.getElementById("sidebar-star-control-button-toggle")
+let warmupMode = false
+function starControlToggle() {
+    warmupMode = !warmupMode
+    if (warmupMode) {
+        teamStarsContainerLeftEl.style.display = "none"
+        teamStarsContainerRightEl.style.display = "none"
+        sidebarStarControlButtonToggleEl.innerText = "Toggle Stars: OFF"
+    } else {
+        teamStarsContainerLeftEl.style.display = "flex"
+        teamStarsContainerRightEl.style.display = "flex"
+        sidebarStarControlButtonToggleEl.innerText = "Toggle Stars: ON"
+    }
+}
+
 socket.onmessage = event => {
     const data = JSON.parse(event.data);
     console.log(data);
@@ -66,33 +143,6 @@ socket.onmessage = event => {
     // Update team names
     currentTeamNameLeft = updateTeamName(currentTeamNameLeft, data.tourney.manager.teamName.left, teamNameLeftEl, teamNameHighlightLeftEl);
     currentTeamNameRight = updateTeamName(currentTeamNameRight, data.tourney.manager.teamName.right, teamNameRightEl, teamNameHighlightRightEl);
-
-    // Set star information
-    if (currentBestOf !== data.tourney.manager.bestOF || currnetLeftStars !== data.tourney.manager.stars.left ||
-        currentRightStars !== data.tourney.manager.stars.right
-    ) {
-        currentBestOf = data.tourney.manager.bestOF;
-        currentFirstTo = Math.ceil(currentBestOf / 2);
-        currnetLeftStars = data.tourney.manager.stars.left;
-        currentRightStars = data.tourney.manager.stars.right;
-
-        teamStarsContainerLeftEl.innerHTML = "";
-        teamStarsContainerRightEl.innerHTML = "";
-        let i = 0;
-        for (i; i < currnetLeftStars; i++) teamStarsContainerLeftEl.append(createStar(true));
-        for (i; i < currentFirstTo; i++) teamStarsContainerLeftEl.append(createStar(false));
-        i = 0;
-        for (i; i < currentRightStars; i++) teamStarsContainerRightEl.append(createStar(true));
-        for (i; i < currentFirstTo; i++) teamStarsContainerRightEl.append(createStar(false));
-
-        // Create Star
-        function createStar(fillStar) {
-            const newStar = document.createElement("div");
-            newStar.classList.add("team-star");
-            if (fillStar) newStar.classList.add("team-star-fill");
-            return newStar;
-        }
-    }
 
     // Score visibility
     if (scoreVisibility !== data.tourney.manager.bools.scoreVisible) {
@@ -175,6 +225,19 @@ socket.onmessage = event => {
         nowPlayingMapperName.innerText = data.menu.bm.metadata.mapper
         
         updateStats = false
+    }
+
+    // Check IPC state
+    if (ipcState !== data.tourney.manager.ipcState) {
+        ipcState = data.tourney.manager.ipcState
+        if (ipcState === 4) setTimeout(() => updateStars = true, 500)
+    }
+
+    // Update stars
+    if (updateStars) {
+        if (warmupMode) return
+        if (currentPlayScoreLeft > currentPlayScoreRight) updateStarCount("left", "add")
+        else if (currentPlayScoreRight > currentPlayScoreLeft) updateStarCount("right", "add")
     }
 }
 

@@ -108,6 +108,19 @@
         <div class="now-playing-mapper-name" id="now-playing-mapper-name">Asaiga</div>
     </div>
 
+    <!-- Side Bar -->
+    <div class="sidebar">
+        <div class="sidebar-title">Star Control</div>
+        <section class="sidebar-star-control-section">
+            <button class="sidebar-star-control-button" onclick="updateStarCount('left','add')">Red ++</button>
+            <button class="sidebar-star-control-button" onclick="updateStarCount('left','minus')">Red --</button>
+            <button class="sidebar-star-control-button" onclick="updateStarCount('right','add')">Blue ++</button>
+            <button class="sidebar-star-control-button" onclick="updateStarCount('right','minus')">Blue --</button>
+            <button class="sidebar-star-control-button sidebar-star-control-large-button" onclick="resetStars()">Reset Stars</button>
+            <button class="sidebar-star-control-button sidebar-star-control-large-button" id="sidebar-star-control-button-toggle" onclick="starControlToggle()">Toggle Stars: ON</button>
+        </section>
+    </div>
+
     <script src="index.js"></script>
 </body>
 </html>

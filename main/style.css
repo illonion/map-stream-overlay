@@ -278,3 +278,45 @@ body { margin: 0; }
     text-overflow: ellipsis;
     max-width: 600px;
 }
+
+/* Sidebar */
+.sidebar {
+    position: absolute;
+    left: 3840px;
+    top: 0;
+    width: 500px;
+    height: 2160px;
+    background-color: var(--blue)
+}
+.sidebar-title {
+    font-family: "Reddit Mono";
+    font-weight: 800;
+    font-size: 4rem;
+    color: white;
+    text-align: center;
+    width: 100%;
+    margin: 0.5em 0;
+}
+.sidebar-star-control-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sidebar-star-control-button {
+    width: 70%;
+    height: 100px;
+    font-size: 3rem;
+    font-family: "Reddit Mono";
+    font-weight: 800;
+    background-color: transparent;
+    color: white;
+    border: 5px solid white;
+    border-radius: 20px;
+    margin: 10px 0;
+}
+.sidebar-star-control-button:active {
+    background-color: var(--red);
+}
+.sidebar-star-control-large-button{
+    height: 150px;
+}
