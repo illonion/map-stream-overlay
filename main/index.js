@@ -113,8 +113,8 @@ socket.onmessage = event => {
 
     // Score animation
     if (scoreVisibility) {
-        animateScore(currentPlayScoreLeft, data.tourney.manager.gameplay.score.left, playScoreLeftEl, scoreBarLeftFillEl);
-        animateScore(currentPlayScoreRight, 4000000, playScoreRightEl, scoreBarRightfillEl);
+        animateScore("left", data.tourney.manager.gameplay.score);
+        animateScore("right", data.tourney.manager.gameplay.score);
     }
 
     // Beatmap information
@@ -189,27 +189,44 @@ function updateTeamName(currentTeamName, newTeamName, teamNameEl, teamNameHighli
 }
 
 // Function to animate score at 24fps
-function animateScore(currentScore, targetScore, scoreElement, scoreBarElement) {
+function animateScore(side, score) {
+    // Determine which variables to use based on the side
+    const currentScore = side === "left" ? currentPlayScoreLeft : currentPlayScoreRight;
+    const targetScore = side === "left" ? score.left : score.right;
+    const scoreElement = side === "left" ? playScoreLeftEl : playScoreRightEl;
+    const scoreBarElement = side === "left" ? scoreBarLeftFillEl : scoreBarRightfillEl;
+    
     // Calculate the difference and the number of frames
     const frames = animationDuration / frameTime;
     const scoreIncrement = (targetScore - currentScore) / frames;
-    
+
     // Cancel any previous animation frame to reset the animation
     cancelAnimationFrame(animationFrame);
 
     // Define the function to update the score in each frame
     function updateScore() {
-        currentScore += scoreIncrement;
-
-        // Avoid small precision errors and update display
-        if (currentScore >= targetScore) currentScore = targetScore;
-        scoreElement.innerText = Math.round(currentScore).toLocaleString();
+        // Update the current score and reassign to the global variable
+        if (side === "left") {
+            currentPlayScoreLeft += scoreIncrement;
+            if (currentPlayScoreLeft >= targetScore) currentPlayScoreLeft = targetScore;
+            scoreElement.innerText = Math.round(currentPlayScoreLeft).toLocaleString();
+        } else {
+            currentPlayScoreRight += scoreIncrement;
+            if (currentPlayScoreRight >= targetScore) currentPlayScoreRight = targetScore;
+            scoreElement.innerText = Math.round(currentPlayScoreRight).toLocaleString();
+        }
 
         // Set width of score bar
-        scoreBarElement.style.width = `${Math.min(currentScore / currentScoreBarMaxScore * 1400, 1400)}px`
+        const barWidth = side === "left" 
+            ? Math.min(currentPlayScoreLeft / currentScoreBarMaxScore * 1400, 1400) 
+            : Math.min(currentPlayScoreRight / currentScoreBarMaxScore * 1400, 1400);
+        scoreBarElement.style.width = `${barWidth}px`;
 
         // Continue or stop the animation
-        if (currentScore !== targetScore) animationFrame = requestAnimationFrame(updateScore);
+        if ((side === "left" && currentPlayScoreLeft !== targetScore) ||
+            (side === "right" && currentPlayScoreRight !== targetScore)) {
+            animationFrame = requestAnimationFrame(updateScore);
+        }
     }
 
     // Start the animation
