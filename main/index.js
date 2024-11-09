@@ -136,6 +136,9 @@ function starControlToggle() {
     }
 }
 
+// Team size 
+const teamSize = 4;
+
 socket.onmessage = event => {
     const data = JSON.parse(event.data);
     console.log(data);
@@ -146,25 +149,36 @@ socket.onmessage = event => {
 
     // Score visibility
     if (scoreVisibility !== data.tourney.manager.bools.scoreVisible) {
-        scoreVisibility = data.tourney.manager.bools.scoreVisible
+        scoreVisibility = data.tourney.manager.bools.scoreVisible;
     }
     
     // Star visibility
     if (starVisibility !== data.tourney.manager.bools.starsVisible) {
         starVisibility = data.tourney.manager.bools.starsVisible
         if (starVisibility) {
-            teamStarsContainerLeftEl.style.display = "flex"
-            teamStarsContainerRightEl.style.display = "flex"
+            teamStarsContainerLeftEl.style.display = "flex";
+            teamStarsContainerRightEl.style.display = "flex";
         } else {
-            teamStarsContainerLeftEl.style.display = "none"
-            teamStarsContainerRightEl.style.display = "none"
+            teamStarsContainerLeftEl.style.display = "none";
+            teamStarsContainerRightEl.style.display = "none";
         }
     }
 
-    // Score animation
     if (scoreVisibility) {
-        animateScore("left", data.tourney.manager.gameplay.score);
-        animateScore("right", data.tourney.manager.gameplay.score);
+        // Get scores for both sides
+        let scores = [];
+        let currentScoreLeft = 0;
+        let currentScoreRight = 0;
+        for (let i = 0; i < data.tourney.manager.ipcClients.length; i++) {
+            let score = data.tourney.ipcClients[i].gameplay.score;
+            if (data.tourney.ipcClients[i].gameplay.mods.str.toUpperCase().includes('EZ')) score *= EZMultiplier;
+            if (i < teamSize) currentScoreLeft += score;
+            else currentScoreRight += score;
+        }
+
+        // Animate score
+        animateScore("left", currentScoreLeft);
+        animateScore("right", currentScoreRight);
     }
 
     // Beatmap information
