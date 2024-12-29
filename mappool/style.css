@@ -1,5 +1,6 @@
 :root {
     --map-selection-title-height: 94px;
+    --colour-side-alignment: 54px;
 }
 
 #main {
@@ -28,3 +29,11 @@
     color: black;
     text-align: center;
 }
+
+/* Sides */
+.coloured-side {
+    position: absolute;
+    top: 261px;
+}
+#blue-side { left: var(--colour-side-alignment); }
+#red-side { right: calc(var(--colour-side-alignment) - 15px); }
