@@ -1,0 +1,30 @@
+:root {
+    --map-selection-title-height: 94px;
+}
+
+#main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2560px;
+    height: 1440px;
+    background-image: url("static/background.png");
+    font-family: "Reddit Mono"
+}
+
+/* Map Selection Title */
+#map-selection-title {
+    position: absolute;
+    top: 37px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 568px;
+    height: var(--map-selection-title-height);
+    border-radius: calc(var(--map-selection-title-height) / 2);
+    background-color: #36FF86;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: var(--map-selection-title-height);
+    color: black;
+    text-align: center;
+}
