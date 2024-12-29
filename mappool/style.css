@@ -1,6 +1,7 @@
 :root {
     --map-selection-title-height: 94px;
     --colour-side-alignment: 54px;
+    --team-banner-square-dimension: 346px;
 }
 
 #main {
@@ -34,6 +35,21 @@
 .coloured-side {
     position: absolute;
     top: 261px;
+    width: 476px;
 }
-#blue-side { left: var(--colour-side-alignment); }
-#red-side { right: calc(var(--colour-side-alignment) - 15px); }
+#left-side { left: var(--colour-side-alignment); }
+#right-side { right: calc(var(--colour-side-alignment) + 25px); }
+
+/* Team Banner */
+.team-banner {
+    position: absolute;
+    top: 85px;
+    left: 53%;
+    width: var(--team-banner-square-dimension);
+    height: var(--team-banner-square-dimension);
+    transform: translateX(-50%);
+    background-image: url("https://a.ppy.sh/8306102");
+    background-size: cover;
+    background-position: center;
+    border-radius: calc(var(--team-banner-square-dimension) / 2);
+}
