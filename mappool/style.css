@@ -46,7 +46,6 @@
     top: 277px;
     width: var(--coloured-side-width);
     height: 1163px;
-    overflow: hidden;
 }
 #left-side { left: var(--coloured-side-alignment); }
 #right-side { right: var(--coloured-side-alignment); }
@@ -68,13 +67,23 @@
     border-radius: 50%;
 }
 
+/* Team Banners */
+.side-banner-container {
+    position: absolute;
+    top: -11px;
+    right: 55px;
+    display: flex;
+    align-items: start;
+}
+
 /* Team Name */
 .team-name {
     position: absolute;
     top: 459.16px;
-    left: -140px;
+    left: -8px;
     transform: rotate(-7deg);
-    width: 748px;
+    clip-path: polygon(2.5% 0%, 100% 0%, 97.5% 100%, 0% 100%);
+    width: 492px;
     height: var(--team-name-height);
     background-color: white;
     
@@ -82,7 +91,7 @@
     font-size: 48px;
     line-height: var(--team-name-height);
     text-align: center;
-    color: rgba(0,0,0,0.75)
+    color: rgba(0,0,0,0.75);
 }
 
 /* Team Stars */
