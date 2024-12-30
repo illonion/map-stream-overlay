@@ -77,3 +77,26 @@
     text-align: center;
     color: rgba(0,0,0,0.75)
 }
+
+/* Team Stars */
+.team-stars {
+    position: absolute;
+    top: 622.66px;
+    left: 38px;
+    width: 391.05px;
+    height: 48.88px;
+    transform: rotate(-7deg);
+    display: flex;
+    justify-content: center;
+}
+.team-star {
+    width: 48.88px;
+    height: 48.88px;
+    margin: 0 4px;
+    background-color: #D9D9D9;
+    border-radius: 50%;
+}
+.team-star:first-child { margin-left: 0; }
+.team-star:last-child { margin-right: 0; }
+.left-star { background-color: #FF11A0; }
+.right-star { background-color: #1F6BFF}
