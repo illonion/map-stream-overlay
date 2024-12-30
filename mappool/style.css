@@ -39,6 +39,7 @@
     top: 277px;
     width: 476px;
     height: 1163px;
+    overflow: hidden;
 }
 #left-side { left: var(--coloured-side-alignment); }
 #right-side { right: var(--coloured-side-alignment); }
@@ -58,4 +59,21 @@
     width: 346px;
     height: 346px;
     border-radius: 50%;
+}
+
+/* Team Name */
+.team-name {
+    position: absolute;
+    top: 459.16px;
+    left: -140px;
+    transform: rotate(-7deg);
+    width: 748px;
+    height: 102px;
+    background-color: white;
+    
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 102px;
+    text-align: center;
+    color: rgba(0,0,0,0.75)
 }
