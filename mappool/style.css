@@ -1,8 +1,15 @@
 :root {
     --map-selection-title-height: 94px;
+    --coloured-side-width: 476px;
     --coloured-side-alignment: 68px;
     --team-banner-square-dimension: 346px;
     --side-background-border-radius: 50px;
+    --team-name-height: 102px;
+    --team-star-dimension: 48.88px;
+    --player-list-alignment: 94px;
+    --player-profile-picture-dimension: 134px;
+    --player-profile-margin-bottom: 20px;
+    --player-profile-margin-side: 10px;
 }
 
 #main {
@@ -37,7 +44,7 @@
 .coloured-side {
     position: absolute;
     top: 277px;
-    width: 476px;
+    width: var(--coloured-side-width);
     height: 1163px;
     overflow: hidden;
 }
@@ -68,12 +75,12 @@
     left: -140px;
     transform: rotate(-7deg);
     width: 748px;
-    height: 102px;
+    height: var(--team-name-height);
     background-color: white;
     
     font-weight: 700;
     font-size: 48px;
-    line-height: 102px;
+    line-height: var(--team-name-height);
     text-align: center;
     color: rgba(0,0,0,0.75)
 }
@@ -84,14 +91,14 @@
     top: 622.66px;
     left: 38px;
     width: 391.05px;
-    height: 48.88px;
+    height: var(--team-star-dimension);
     transform: rotate(-7deg);
     display: flex;
     justify-content: center;
 }
 .team-star {
-    width: 48.88px;
-    height: 48.88px;
+    width: var(--team-star-dimension);
+    height: var(--team-star-dimension);
     margin: 0 4px;
     background-color: #D9D9D9;
     border-radius: 50%;
@@ -100,3 +107,34 @@
 .team-star:last-child { margin-right: 0; }
 .left-star { background-color: #FF11A0; }
 .right-star { background-color: #1F6BFF}
+
+/* Player List */
+.players-list {
+    width: calc(var(--coloured-side-width) - (var(--player-list-alignment) * 2));
+    position: absolute;
+    top: 719px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+/* Player profiles */
+/* Odd elements */
+.player-profile:nth-child(odd) { margin: 0 var(--player-profile-margin-side) var(--player-profile-margin-bottom) 0; }
+.player-profile:nth-child(even) { margin: 0 0 var(--player-profile-margin-bottom) var(--player-profile-margin-side); }
+.player-profile-picture {
+    width: var(--player-profile-picture-dimension);
+    height: var(--player-profile-picture-dimension);
+    border-radius: 50%;
+}
+/* Member Name */
+.player-name {
+    width: var(--player-profile-picture-dimension);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 700;
+}
