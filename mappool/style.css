@@ -158,12 +158,18 @@
     transform: translateX(-50%);
     width: 1342px;
     display: flex;
-    justify-content: space-between
+    flex-direction: column;
 }
+#mappool-main-section {
+    display: flex;
+    justify-content: space-between;
+}
+/* Map Card Background*/
 .map-card {
     position: relative;
     width: 666px;
     height: 147px;
+    border-radius: 59px;
     margin-bottom: 15px;
     overflow: hidden;
 }
@@ -176,11 +182,29 @@
     display: flex;
     flex-direction: column;
 }
+/* Map Card Background */
+.map-card-background {
+    position: absolute;
+    top: 0;
+    left: 59px;
+    width: 608px;
+    height: inherit;
+    border-radius: 0 59px 59px 0;
+    background-image: url("https://assets.ppy.sh/beatmaps/1037604/covers/cover@2x.jpg");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+}
 /* Map Song Name */
 .song-name {
     font-size: 28px;
     line-height: 35px; 
     color: white;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 /* Map Song Artist */
 .song-artist {
@@ -224,7 +248,7 @@
     left: -1px;
     width: 100%;
     height: 100%;
-    background-color: rgba(255,255,255,0.59);
+    background-color: rgba(255,255,255,0.7);
     border-radius: 59px;
 }
 .map-card-action > * {
