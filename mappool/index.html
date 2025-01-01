@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+
+    <script src="../_shared/deps/reconnecting-websocket.min.js"></script>
 </head>
 <body>
     <div id="main">
@@ -22,7 +24,7 @@
                 <img class="side-banner" src="static/first-pick.png">
             </div>
             <div class="team-name" id="left-team-name">TEAM KENDRICK</div>
-            <div class="team-stars">
+            <div class="team-stars" id="team-stars-container-left">
                 <div class="team-star"></div>
                 <div class="team-star"></div>
                 <div class="team-star"></div>
@@ -58,7 +60,7 @@
                 <img class="side-banner" src="static/first-pick.png">
             </div>
             <div class="team-name" id="right-team-name">TEAM DRAKE</div>
-            <div class="team-stars">
+            <div class="team-stars" id="team-stars-container-right">
                 <div class="team-star"></div>
                 <div class="team-star"></div>
                 <div class="team-star"></div>
