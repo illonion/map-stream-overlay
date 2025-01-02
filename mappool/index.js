@@ -6,6 +6,7 @@ socket.onclose = event => { console.log("Socket Closed Connection: ", event); so
 socket.onerror = error => console.log("Socket Error: ", error);
 
 // Fetch data with Fetch API
+const sideBarMappoolEl = document.getElementById("side-bar-mappool")
 let currentBestOf = 0, currentFirstTo = 0, currentLeftStars = 0, currentRightStars = 0;
 let allBeatmaps;
 async function getMappool() {
@@ -25,6 +26,16 @@ async function getMappool() {
     currentFirstTo = Math.ceil(currentBestOf / 2);
     
     createStarDisplay();
+
+    // Create side bar mappool buttons
+    sideBarMappoolEl.innerHTML = ""
+    for (let i = 0; i < allBeatmaps.length; i++) {
+        const sideBarMappoolButton = document.createElement("button")
+        sideBarMappoolButton.classList.add("side-bar-mappool-button")
+        sideBarMappoolButton.setAttribute("data-id", allBeatmaps[i].beatmapID)
+        sideBarMappoolButton.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
+        sideBarMappoolEl.append(sideBarMappoolButton)
+    }
 }
 getMappool();
 

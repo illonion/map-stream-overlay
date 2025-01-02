@@ -10,10 +10,13 @@
     --player-profile-picture-dimension: 134px;
     --player-profile-margin-bottom: 20px;
     --player-profile-margin-side: 10px;
+    --side-bar-mappool-button-height: 50px;
+    --side-bar-mappool-button-border-width: 3px;
 
     --colour-lime: #EEFF00;
     --colour-pink: #FF11A0;
     --colour-blue: #1F6BFF;
+    --colour-sidebar-lime: #D3FA62;
 }
 
 #main {
@@ -260,3 +263,36 @@
 .map-card-win-text { left: 20px; }
 .map-card-colour-pink { color: var(--colour-pink); }
 .map-card-colour-blue { color: var(--colour-blue); }
+
+/* Side Bar */
+.side-bar {
+    position: absolute;
+    top: 0;
+    left: 2560px;
+    width: 300px;
+    height: 1440px;
+    background-color: var(--colour-sidebar-lime);
+}
+
+/* Sidebar Mappool */
+#side-bar-mappool {
+    width: inherit;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+.side-bar-mappool-button {
+    width: 130px;
+    height: var(--side-bar-mappool-button-height);
+    border-radius: 20px;
+    font-size: 32px;
+    margin: 8px 5px;
+    background-color: transparent;
+    line-height: calc(var(--side-bar-mappool-button-height) - var(--side-bar-mappool-button-border-width) * 2);
+    border: var(--side-bar-mappool-button-border-width) solid black;
+}
+.side-bar-mappool-button:active {
+    color: var(--colour-sidebar-lime);
+    background-color: black;
+}
