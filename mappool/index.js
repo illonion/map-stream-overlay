@@ -60,3 +60,37 @@ function createStarDisplay() {
         return newStar;
     }
 }
+
+// Change first pick bans
+const sideBannerContainerLeft = document.getElementById("side-banner-container-left")
+const sideBannerContainerRight = document.getElementById("side-banner-container-right")
+function changeFirstPickBans() {
+    // Get bans
+    const selectedFirstBan = document.querySelector('input[name="first-ban"]:checked')
+    sideBannerContainerLeft.children[0].style.display = "none"
+    sideBannerContainerRight.children[0].style.display = "none"
+
+    if (selectedFirstBan) {
+        const selectedFirstBanValue = selectedFirstBan.value
+        if (selectedFirstBanValue === "red-ban") {
+            sideBannerContainerLeft.children[0].style.display = "block"
+        } else if (selectedFirstBanValue === "blue-ban") {
+            sideBannerContainerRight.children[0].style.display = "block"
+        }
+    }
+
+    // Get picks
+    const selectedFirstPick = document.querySelector('input[name="first-pick"]:checked')
+    sideBannerContainerLeft.children[1].style.display = "none"
+    sideBannerContainerRight.children[1].style.display = "none"
+
+    if (selectedFirstPick) {
+        const selectedFirstPickValue = selectedFirstPick.value
+        if (selectedFirstPickValue === "red-pick") {
+            sideBannerContainerLeft.children[1].style.display = "block"
+        } else if (selectedFirstPickValue === "blue-pick") {
+            sideBannerContainerRight.children[1].style.display = "block"
+        }
+    }
+}
+changeFirstPickBans()

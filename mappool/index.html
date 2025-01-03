@@ -19,7 +19,7 @@
         <div class="coloured-side" id="left-side">
             <img class="side-background" src="static/leftSide.png">
             <img class="team-banner" id="left-team-banner" alt="Left Team Banner" src="https://a.ppy.sh/8306102">
-            <div class="side-banner-container">
+            <div class="side-banner-container" id="side-banner-container-left">
                 <img class="side-banner" src="static/first-ban.png">
                 <img class="side-banner" src="static/first-pick.png">
             </div>
@@ -55,7 +55,7 @@
         <div class="coloured-side" id="right-side">
             <img class="side-background" src="static/rightSide.png">
             <img class="team-banner" id="left-team-banner" alt="Left Team Banner" src="https://a.ppy.sh/8306102">
-            <div class="side-banner-container">
+            <div class="side-banner-container" id="side-banner-container-right">
                 <img class="side-banner" src="static/first-ban.png">
                 <img class="side-banner" src="static/first-pick.png">
             </div>
@@ -123,8 +123,22 @@
 
     <!-- Side Bar -->
     <div class="side-bar">
+        <div id="first-pick-ban-selection">
+            <div class="side-bar-title">FIRST PICK BAN SELETION</div>
+            <section class="side-bar-first-pick-ban-selection-section" id="side-bar-first-ban-section">
+                <div class="side-bar-sub-text">FIRST BAN: </div>
+                <label for="first-ban-red"><input type="radio" value="red-ban" id="first-ban-red" name="first-ban"> RED TEAM</label><br>
+                <label for="first-ban-blue"><input type="radio" value="blue-ban" id="first-ban-blue" name="first-ban"> BLUE TEAM</label>
+            </section>
+            <section class="side-bar-first-pick-ban-selection-section" id="side-bar-first-pick-section">
+                <div class="side-bar-sub-text">FIRST BAN: </div>
+                <label for="first-pick-red"><input type="radio" value="red-pick" id="first-pick-red" name="first-pick"> RED TEAM</label><br>
+                <label for="first-pick-blue"><input type="radio" value="blue-pick" id="first-pick-blue" name="first-pick"> BLUE TEAM</label>
+            </section>
+            <button class="side-bar-full-length-button" onclick="changeFirstPickBans()">SUBMIT</button>
+        </div>
         <div id="side-bar-mappool"></div>
     </div>
-    <script src="index.js"></script>
+    <script defer src="index.js"></script>
 </body>
 </html>
