@@ -179,6 +179,7 @@ body {
     border-radius: 59px;
     margin-bottom: 15px;
     overflow: hidden;
+    box-shadow: 7px 4px 20px 0px rgba(0, 0, 0, 0.5);
 }
 
 /* Map details */
