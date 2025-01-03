@@ -31,7 +31,7 @@ async function getMappool() {
     sideBarMappoolEl.innerHTML = ""
     for (let i = 0; i < allBeatmaps.length; i++) {
         const sideBarMappoolButton = document.createElement("button")
-        sideBarMappoolButton.classList.add("side-bar-mappool-button")
+        sideBarMappoolButton.classList.add("side-bar-button", "side-bar-mappool-button")
         sideBarMappoolButton.setAttribute("data-id", allBeatmaps[i].beatmapID)
         sideBarMappoolButton.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
         sideBarMappoolEl.append(sideBarMappoolButton)
