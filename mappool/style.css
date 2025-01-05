@@ -181,6 +181,11 @@ body {
     overflow: hidden;
     box-shadow: 7px 4px 20px 0px rgba(0, 0, 0, 0.5);
 }
+.tb-map-card-container {
+    position: relative;
+    width: 892px;
+    height: 197px;
+}
 
 /* Map details */
 .map-details {
@@ -189,6 +194,9 @@ body {
     left: 80px;
     display: flex;
     flex-direction: column;
+}
+.tb-map-details {
+    top: 24px;
 }
 /* Map Card Background */
 .map-card-background {
@@ -203,6 +211,14 @@ body {
     background-position: center;
     opacity: 0.3;
 }
+.tb-map-card-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: inherit;
+    height: inherit;
+    border-radius: 59px;
+}
 /* Map Song Name */
 .song-name {
     font-size: 28px;
@@ -214,12 +230,19 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.tb-song-name {
+    font-size: 40px;
+}
 /* Map Song Artist */
 .song-artist {
     font-size: 20px;
     font-weight: 400;
     line-height: 25px;
     color: var(--colour-lime);
+}
+.tb-song-artist {
+    font-size: 2em;
+    line-height: 2em;
 }
 /* Mod ID */
 .mod-id {
@@ -228,6 +251,15 @@ body {
     left: 567px;
     width: 50px;
     height: 50px;
+    background-color: white;
+    border-radius: 50%;
+}
+.tb-mod-id {
+    position: absolute; 
+    top: 24px;
+    left: 771px;
+    width: 86px;
+    height: 86px;
     background-color: white;
     border-radius: 50%;
 }
@@ -254,6 +286,10 @@ body {
     color: black;
     opacity: 0.75;
 }
+.tb-mod-text {
+    font-size: 40px;
+    color: white;
+}
 /* Mapper */
 .song-mapper {
     position: absolute;
@@ -262,6 +298,10 @@ body {
     color: white;
     font-size: 14px;
     font-weight: 400;
+}
+.tb-song-mapper {
+    top: 127px;
+    right: 29px;
 }
 .map-detail-lime-bold { 
     font-weight: 700;
@@ -275,6 +315,10 @@ body {
     color: white;
     font-size: 14px;
     font-weight: 400;
+}
+.tb-star-rating {
+    top: 150px;
+    right: 29px;
 }
 /* Map Card Action */
 .map-card-action {
@@ -295,6 +339,14 @@ body {
 .map-card-win-text { left: 20px; }
 .map-card-colour-pink { color: var(--colour-pink); }
 .map-card-colour-blue { color: var(--colour-blue); }
+
+/* Tiebreaker map card */
+#tb-map-card {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 22px;
+}
 
 /* Side Bar */
 .side-bar {
