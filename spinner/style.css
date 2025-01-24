@@ -1,0 +1,61 @@
+.main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2560px;
+    height: 1440px;
+    background-image: url("static/background.png");
+    font-family: "Reddit Mono";
+    font-weight: 700;
+}
+
+/* Players Container */
+.players-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 492px;
+    height: 667px;
+}
+
+/* Player Text Containers */
+.player-text-container > * {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/* Invisible (on either side) */
+.invisible-player { 
+    font-size: 0.25rem;
+    color: rgba(0,0,0,0);
+}
+.player-0 { top: 40px; }
+.player-8 { top: 581px; }
+/* Very Side Player (on either side) */
+.very-side-player {
+    font-size: 0.75rem;
+    color: rgba(0,0,0,0.15);
+}
+.player-1 { top: 66px; }
+.player-7 { top: 551px; }
+/* Somewhat Side Player (on either side) */
+.somewhat-side-player {
+    font-size: 1.5rem;
+    color: rgba(0,0,0,0.35);
+}
+.player-2 { top: 107px; }
+.player-6 { top: 502px; }
+/* Somewhat Middle Player (on either side) */
+.somewhat-middle-player {
+    font-size: 2.5rem;
+    color: rgba(0,0,0,0.55)
+}
+.player-3 { top: 175px; }
+.player-5 { top: 417px; }
+/* Middle Player */
+.player-4 {
+    top: 284px;
+    font-size: 4rem;
+    color: rgba(0, 0, 0, 0.75);
+    white-space: nowrap;
+}
