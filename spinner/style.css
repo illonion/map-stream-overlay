@@ -19,16 +19,27 @@
     transform: scale(1.37, 1.37) rotate(-6.47deg);
 }
 
+/* Players Container Background */
+.player-container-background {
+    width: 492px;
+    height: 667px;
+}
+
 /* Player Text Containers */
 .player-text-container > * {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
 }
 /* Invisible (on either side) */
 .invisible-player { 
     font-size: 0.25rem;
     color: rgba(0,0,0,0);
+    width: 24px;
 }
 .player-0 { top: 40px; }
 .player-8 { top: 581px; }
@@ -36,6 +47,7 @@
 .very-side-player {
     font-size: 0.75rem;
     color: rgba(0,0,0,0.15);
+    width: 70px;
 }
 .player-1 { top: 66px; }
 .player-7 { top: 551px; }
@@ -43,13 +55,15 @@
 .somewhat-side-player {
     font-size: 1.5rem;
     color: rgba(0,0,0,0.35);
+    width: 140px;
 }
 .player-2 { top: 107px; }
 .player-6 { top: 502px; }
 /* Somewhat Middle Player (on either side) */
 .somewhat-middle-player {
     font-size: 2.5rem;
-    color: rgba(0,0,0,0.55)
+    color: rgba(0,0,0,0.55);
+    width: 237px;
 }
 .player-3 { top: 175px; }
 .player-5 { top: 417px; }
@@ -58,7 +72,7 @@
     top: 284px;
     font-size: 4rem;
     color: rgba(0, 0, 0, 0.75);
-    white-space: nowrap;
+    width: 372px;
 }
 
 /* Bounty Image*/
