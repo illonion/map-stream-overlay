@@ -12,10 +12,11 @@
 /* Players Container */
 .players-container {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 430px;
+    left: 255px;
     width: 492px;
     height: 667px;
+    transform: scale(1.37, 1.37) rotate(-6.47deg);
 }
 
 /* Player Text Containers */
@@ -58,4 +59,82 @@
     font-size: 4rem;
     color: rgba(0, 0, 0, 0.75);
     white-space: nowrap;
+}
+
+/* Bounty Image*/
+.bounty-title {
+    position: absolute;
+    top: 155px;
+    left: 641px;
+    width: 260px;
+    transform: rotate(12.32deg);
+}
+
+/* osu! background */
+.osu-background {
+    position: absolute;
+    left: 1101.72px;
+    top: -94px;
+    transform: rotate(4.83deg);
+    width: 2676px;
+    /* filter: blur(81.5px); */   
+}
+
+/* Profile Containers */
+.profile-containers {
+    position: absolute;
+    left: 1817.995px;
+    top: 415.75px;
+    transform: translateX(-50%) rotate(5.22deg);
+    display: flex;
+    gap: 43px;
+}
+
+/* Individual Profile Picture */
+.individual-profile-picture-container {
+    width: 544px;
+    text-align: center;
+}
+.individual-profile-picture {
+    border-radius: 50%;
+    width: 439px;
+    margin-bottom: 50px;
+}
+
+/* Individual Name */
+.individual-name {
+    width: 544px;
+    height: 107px;
+    background-color: #00FFE0;
+    border-radius: 107px;
+    color: #004038;
+    line-height: 107px;
+    text-align: center;
+    font-size: 4rem;
+    letter-spacing: -1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Top Background */
+.top-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2560px;
+}
+/* Bottom Background */
+.bottom-background {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2560px;
+}
+
+/* Logo */
+.top-left-logo {
+    position: absolute;
+    left: 107px;
+    width: 277.33px;
 }
