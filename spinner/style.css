@@ -75,6 +75,194 @@
     width: 372px;
 }
 
+/* From Player 0 to Player 1 */
+.from-player-0-to-player-1 {
+    animation-name: from-player-0-to-player-1;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards
+}
+@keyframes from-player-0-to-player-1 {
+    from {
+        top: 40px;
+        font-size: 0.25rem;
+        color: rgba(0,0,0,0);
+        width: 24px;
+    }
+    to {
+        top: 66px;
+        font-size: 0.75rem;
+        color: rgba(0,0,0,0.15);
+        width: 70px;
+    }
+}
+/* From Player 1 to Player 2 */
+.from-player-1-to-player-2 {
+    animation-name: from-player-1-to-player-2;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards
+}
+@keyframes from-player-1-to-player-2 {
+    from {
+        top: 66px;
+        font-size: 0.75rem;
+        color: rgba(0,0,0,0.15);
+        width: 70px;
+    }
+    to {
+        top: 107px;
+        font-size: 1.5rem;
+        color: rgba(0,0,0,0.35);
+        width: 140px;
+    }
+}
+/* From Player 2 to Player 3 */
+.from-player-2-to-player-3 {
+    animation-name: from-player-2-to-player-3;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+@keyframes from-player-2-to-player-3 {
+    from {
+        top: 107px;
+        font-size: 1.5rem;
+        color: rgba(0,0,0,0.35);
+        width: 140px;
+    }
+    to {
+        top: 175px;
+        font-size: 2.5rem;
+        color: rgba(0,0,0,0.55);
+        width: 237px;
+    }
+}
+
+/* From Player 3 to Player 4 */
+.from-player-3-to-player-4 {
+    animation-name: from-player-3-to-player-4;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+@keyframes from-player-3-to-player-4 {
+    from {
+        top: 175px;
+        font-size: 2.5rem;
+        color: rgba(0,0,0,0.55);
+        width: 237px;
+    }
+    to {
+        top: 284px;
+        font-size: 4rem;
+        color: rgba(0,0,0,0.75);
+        width: 372px;
+    }
+}
+
+/* From Player 4 to Player 5 */
+.from-player-4-to-player-5 {
+    animation-name: from-player-4-to-player-5;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+@keyframes from-player-4-to-player-5 {
+    from {
+        top: 284px;
+        font-size: 4rem;
+        color: rgba(0,0,0,0.75);
+        width: 372px;
+    }
+    to {
+        top: 417px;
+        font-size: 2.5rem;
+        color: rgba(0,0,0,0.55);
+        width: 237px;
+    }
+}
+
+/* From Player 5 to Player 6 */
+.from-player-5-to-player-6 {
+    animation-name: from-player-5-to-player-6;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+@keyframes from-player-5-to-player-6 {
+    from {
+        top: 417px;
+        font-size: 2.5rem;
+        color: rgba(0,0,0,0.55);
+        width: 237px;
+    }
+    to {
+        top: 502px;
+        font-size: 1.5rem;
+        color: rgba(0,0,0,0.35);
+        width: 140px;
+    }
+}
+
+/* From Player 6 to Player 7 */
+.from-player-6-to-player-7 {
+    animation-name: from-player-6-to-player-7;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+@keyframes from-player-6-to-player-7 {
+    from {
+        top: 502px;
+        font-size: 1.5rem;
+        color: rgba(0,0,0,0.35);
+        width: 140px;
+    }
+    to {
+        top: 551px;
+        font-size: 0.75rem;
+        color: rgba(0,0,0,0.15);
+        width: 70px;
+    }
+}
+
+/* From Player 7 to Player 8 */
+.from-player-7-to-player-8 {
+    animation-name: from-player-7-to-player-8;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+@keyframes from-player-7-to-player-8 {
+    from {
+        top: 551px;
+        font-size: 0.75rem;
+        color: rgba(0,0,0,0.15);
+        width: 70px;
+    }
+    to {
+        top: 581px;
+        font-size: 0.25rem;
+        color: rgba(0,0,0,0);
+        width: 24px;
+    }
+}
+
+/* From Player 8 to Player 0 */
+.from-player-8-to-player-0 {
+    animation-name: from-player-8-to-player-0;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+@keyframes from-player-8-to-player-0 {
+    from {
+        top: 581px;
+        font-size: 0.25rem;
+        color: rgba(0,0,0,0);
+        width: 24px;
+    }
+    to {
+        top: 40px;
+        font-size: 0.25rem;
+        color: rgba(0,0,0,0);
+        width: 24px;
+    }
+}
+
+
 /* Bounty Image*/
 .bounty-title {
     position: absolute;

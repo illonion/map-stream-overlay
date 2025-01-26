@@ -53,38 +53,112 @@ function setSpinner() {
     playerTextContainer.innerHTML = ""
 
     // Add first element to top invisible, elements 2-8 to display, then rest to bottom invisible
-    for (let i = 0; i < spinnerPlayers.length; i++) {
+    for (let i = - 1; i < spinnerPlayers.length - 1; i++) {
         const playerDiv = document.createElement("div")
-        playerDiv.innerText = spinnerPlayers[i].username
-        switch (i) {
+        playerDiv.innerText = spinnerPlayers[i + 1].username
+        switch (i + 1) {
             case 0:
+            case -1:
                 playerDiv.classList.add("invisible-player", "player-0")
+                playerDiv.dataset.action="player-0"
                 break
             case 1:
                 playerDiv.classList.add("very-side-player", "player-1")
+                playerDiv.dataset.action="player-1"
                 break
             case 2:
                 playerDiv.classList.add("somewhat-side-player", "player-2")
+                playerDiv.dataset.action="player-2"
                 break
             case 3:
                 playerDiv.classList.add("somewhat-middle-player", "player-3")
+                playerDiv.dataset.action="player-3"
                 break
             case 4:
                 playerDiv.classList.add("player-4")
+                playerDiv.dataset.action="player-4"
                 break
             case 5:
                 playerDiv.classList.add("somewhat-middle-player", "player-5")
+                playerDiv.dataset.action="player-5"
                 break
             case 6:
                 playerDiv.classList.add("somewhat-side-player", "player-6")
+                playerDiv.dataset.action="player-6"
                 break
             case 7:
                 playerDiv.classList.add("very-side-player", "player-7")
+                playerDiv.dataset.action="player-7"
                 break
             default:
                 playerDiv.classList.add("invisible-player", "player-8")
+                playerDiv.dataset.action="player-8"
                 break
         }
+        
         playerTextContainer.append(playerDiv)
     }
+
+    setInterval(startIdleSpinner, 2000)
 }
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+function startIdleSpinner() {
+    const transitions = {
+        "player-8": "player-0",
+        "player-0": "player-1",
+        "player-1": "player-2",
+        "player-2": "player-3",
+        "player-3": "player-4",
+        "player-4": "player-5",
+        "player-5": "player-6",
+        "player-6": "player-7",
+        "player-7": "player-8"
+    }
+ 
+    const classChanges = {
+        "player-8": { remove: ["from-player-8-to-player-0", "from-player-0-to-player-1", "from-player-1-to-player-2", "from-player-2-to-player-3", "from-player-3-to-player-4", "from-player-4-to-player-5", "from-player-5-to-player-6", "from-player-6-to-player-7", "from-player-7-to-player-8", "invisible-player", "player-8"], add: ["invisible-player", "player-0", "from-player-8-to-player-0"] },
+        "player-0": { remove: ["from-player-8-to-player-0", "from-player-0-to-player-1", "from-player-1-to-player-2", "from-player-2-to-player-3", "from-player-3-to-player-4", "from-player-4-to-player-5", "from-player-5-to-player-6", "from-player-6-to-player-7", "from-player-7-to-player-8", "invisible-player", "player-0"], add: ["very-side-player", "player-1", "from-player-0-to-player-1"] },
+        "player-1": { remove: ["from-player-8-to-player-0", "from-player-0-to-player-1", "from-player-1-to-player-2", "from-player-2-to-player-3", "from-player-3-to-player-4", "from-player-4-to-player-5", "from-player-5-to-player-6", "from-player-6-to-player-7", "from-player-7-to-player-8", "very-side-player", "player-1"], add: ["somewhat-side-player", "player-2", "from-player-1-to-player-2"] },
+        "player-2": { remove: ["from-player-8-to-player-0", "from-player-0-to-player-1", "from-player-1-to-player-2", "from-player-2-to-player-3", "from-player-3-to-player-4", "from-player-4-to-player-5", "from-player-5-to-player-6", "from-player-6-to-player-7", "from-player-7-to-player-8", "somewhat-side-player", "player-2"], add: ["somewhat-middle-player", "player-3", "from-player-2-to-player-3"] },
+        "player-3": { remove: ["from-player-8-to-player-0", "from-player-0-to-player-1", "from-player-1-to-player-2", "from-player-2-to-player-3", "from-player-3-to-player-4", "from-player-4-to-player-5", "from-player-5-to-player-6", "from-player-6-to-player-7", "from-player-7-to-player-8", "somewhat-middle-player", "player-3"], add: ["player-4", "from-player-3-to-player-4"] },
+        "player-4": { remove: ["from-player-8-to-player-0", "from-player-0-to-player-1", "from-player-1-to-player-2", "from-player-2-to-player-3", "from-player-3-to-player-4", "from-player-4-to-player-5", "from-player-5-to-player-6", "from-player-6-to-player-7", "from-player-7-to-player-8", "player-4"], add: ["somewhat-middle-player", "player-5", "from-player-4-to-player-5"] },
+        "player-5": { remove: ["from-player-8-to-player-0", "from-player-0-to-player-1", "from-player-1-to-player-2", "from-player-2-to-player-3", "from-player-3-to-player-4", "from-player-4-to-player-5", "from-player-5-to-player-6", "from-player-6-to-player-7", "from-player-7-to-player-8", "somewhat-middle-player", "player-5"], add: ["somewhat-side-player", "player-6", "from-player-5-to-player-6"] },
+        "player-6": { remove: ["from-player-8-to-player-0", "from-player-0-to-player-1", "from-player-1-to-player-2", "from-player-2-to-player-3", "from-player-3-to-player-4", "from-player-4-to-player-5", "from-player-5-to-player-6", "from-player-6-to-player-7", "from-player-7-to-player-8", "somewhat-side-player", "player-6"], add: ["very-side-player", "player-7", "from-player-6-to-player-7"] },
+        "player-7": { remove: ["from-player-8-to-player-0", "from-player-0-to-player-1", "from-player-1-to-player-2", "from-player-2-to-player-3", "from-player-3-to-player-4", "from-player-4-to-player-5", "from-player-5-to-player-6", "from-player-6-to-player-7", "from-player-7-to-player-8", "very-side-player", "player-7"], add: ["invisible-player", "player-8", "from-player-7-to-player-8"] }
+    }
+ 
+    const children = Array.from(playerTextContainer.children);
+
+    // First, find and transition the "player-0" right before "player-1"
+    let primaryTargetIndex = children.findIndex((child, index) => 
+        child.dataset.action === "player-0" && 
+        children[(index + 1) % children.length].dataset.action === "player-1"
+    );
+ 
+    // Transition the primary target first
+    if (primaryTargetIndex !== -1) {
+        const primaryTarget = children[primaryTargetIndex];
+        primaryTarget.dataset.action = "player-1";
+        const changes = classChanges["player-0"];
+        primaryTarget.classList.remove(...changes.remove);
+        primaryTarget.classList.add(...changes.add);
+    }
+
+    // Then transition all other elements
+    children.forEach((child, index) => {
+        if (index === primaryTargetIndex) return
+
+        const currentAction = child.dataset.action
+        const nextAction = transitions[currentAction]
+
+        console.log(currentAction)
+        if (nextAction && currentAction !== "player-0") {
+            child.dataset.action = nextAction
+            const changes = classChanges[currentAction]
+            child.classList.remove(...changes.remove)
+            child.classList.add(...changes.add);
+        }
+    })
+ }
