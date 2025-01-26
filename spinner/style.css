@@ -138,3 +138,48 @@
     left: 107px;
     width: 277.33px;
 }
+
+/* Sidebar */
+.sidebar {
+    position: absolute;
+    left: 2560px;
+    top: 0;
+    width: 500px;
+    height: 1440px;
+    background-color: #1E68F9;
+}
+.sidebar-title {
+    font-family: "Reddit Mono";
+    font-weight: 800;
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+    width: 90%;
+    margin: 0.5em 5%;
+}
+.sidebar-text {
+    margin: 0 5%;
+}
+.sidebar-textarea {
+    width: 80%;
+    height: 200px;
+    margin: 0.5em 10%;
+    background-color: #4180ff;
+    border: 4px solid white;
+    font-family: "Reddit Mono";
+    font-weight: 700;
+    color: white;
+    font-size: 2em;
+}
+.sidebar-button {
+    width: 70%;
+    height: 80px;
+    font-size: 2rem;
+    font-family: "Reddit Mono";
+    font-weight: 800;
+    background-color: transparent;
+    color: white;
+    border: 4px solid white;
+    border-radius: 20px;
+    margin: 0.5em 15%;
+}

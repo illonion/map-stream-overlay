@@ -56,6 +56,21 @@
         <img class="bottom-background" src="static/background/bottom-background-2.png">
         <img class="bottom-background" src="static/background/bottom-background-3.png">
     </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-add-players">
+            <div class="sidebar-title">Please enter the PLAYER IDS of all players here (separated by new line):</div>
+            <textarea class="sidebar-textarea" id="player-ids-input"></textarea>
+            <button class="sidebar-button" onclick="addPlayers()">Add Players</button>
+            <button class="sidebar-button" onclick="clearPlayers()">Clear Players</button>
+
+            <div class="sidebar-title">Players:</div>
+            <div id="sidebar-player-list"></div>
+            <button class="sidebar-button" onclick="setSpinner()">Set Spinner</button>
+        </div>
+    </div>
+    
     <script src="index.js"></script>
 </body>
 </html>
