@@ -21,10 +21,10 @@
         <img class="bounty-title" src="static/bounty-title.png">
 
         <!-- Osu! Background -->
-        <img class="osu-background" src="static/gameplay.jpg">
+        <img id="osu-background" class="osu-background" src="static/gameplay.jpg">
 
         <!-- Profile Containers -->
-        <div class="profile-containers">
+        <div id="profile-containers" class="profile-containers">
             <div class="individual-profile-container">
                 <div class="individual-profile-picture-container">
                     <img class="individual-profile-picture" src="https://a.ppy.sh/8306102">
@@ -58,6 +58,8 @@
             <div class="sidebar-title">Players:</div>
             <div id="sidebar-player-list"></div>
             <button class="sidebar-button" onclick="setSpinner()">Set Spinner</button>
+            <button class="sidebar-button" onclick="startSpinner()">Start Spinner</button>
+            <button class="sidebar-button" onclick="stopSpinner()">Stop Spinner</button>
         </div>
     </div>
     

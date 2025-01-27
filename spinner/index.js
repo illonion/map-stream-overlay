@@ -1,5 +1,6 @@
 // All Players
 let allPlayers = []
+let remainingSpinnerPlayers = []
 const findPlayerUsingSome = id => allPlayers.some(player => player.id == id)
 const findPlayerUsingFind = id => allPlayers.find(player => player.id == id)
 
@@ -32,6 +33,8 @@ async function addPlayers() {
             })
         }
     }
+
+    remainingSpinnerPlayers = [...allPlayers]
 }
 
 // Clear Players
@@ -40,14 +43,16 @@ function clearPlayers() {
     sidebarPlayerListEl.innerHTML = ""
 }
 
+let currentSpinnerIntervalId
+
 // Set spinner
 const playerTextContainer = document.getElementById("player-text-container")
 let spinnerPlayers = []
 function setSpinner() {
     spinnerPlayers = []
-    if (allPlayers.length === 0) return
+    if (remainingSpinnerPlayers.length === 0) return
     while (spinnerPlayers.length < 9) {
-        spinnerPlayers = spinnerPlayers.concat(allPlayers)
+        spinnerPlayers = spinnerPlayers.concat(remainingSpinnerPlayers)
     }
 
     playerTextContainer.innerHTML = ""
@@ -56,6 +61,7 @@ function setSpinner() {
     for (let i = - 1; i < spinnerPlayers.length - 1; i++) {
         const playerDiv = document.createElement("div")
         playerDiv.innerText = spinnerPlayers[i + 1].username
+        playerDiv.dataset.id = spinnerPlayers[i + 1].id
         switch (i + 1) {
             case 0:
             case -1:
@@ -99,7 +105,7 @@ function setSpinner() {
         playerTextContainer.append(playerDiv)
     }
 
-    setInterval(startIdleSpinner, 2000)
+    currentSpinnerIntervalId = setInterval(startIdleSpinner, 1500)
 }
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -161,4 +167,96 @@ function startIdleSpinner() {
             child.classList.add(...changes.add);
         }
     })
- }
+}
+
+let currentAnimationDenominator = 2
+let isStopping = false
+
+// Start Spinner
+function startSpinner() {
+    if (playerTextContainer.childElementCount === 0) return
+
+    clearInterval(currentSpinnerIntervalId)
+    isStopping = false
+
+    function adjustAndRunSpinner() {
+        startIdleSpinner()
+        if (currentAnimationDenominator < 60) currentAnimationDenominator += 2
+        const intervalTime = (3 / currentAnimationDenominator) * 1000
+
+        // Update animation duration
+        const children = Array.from(playerTextContainer.children)
+        children.forEach(child => {
+            child.style.animationDuration = `${3 / currentAnimationDenominator}s`
+        })
+
+        clearInterval(currentSpinnerIntervalId)
+        currentSpinnerIntervalId = setInterval(adjustAndRunSpinner, intervalTime)
+    }
+
+    // Start the first spinner loop
+    currentSpinnerIntervalId = setInterval(adjustAndRunSpinner, (3 / currentAnimationDenominator) * 1000)
+}
+
+// Stop Spinner
+async function stopSpinner() {
+    clearInterval(currentSpinnerIntervalId)
+    isStopping = true
+
+    function slowDownSpinner() {
+        startIdleSpinner()
+
+        if (currentAnimationDenominator > 2) currentAnimationDenominator -= 2
+        else {
+            clearInterval(currentSpinnerIntervalId)
+            return
+        }
+
+        const intervalTime = (3 / currentAnimationDenominator) * 1000
+
+        // Update animation duration
+        const children = Array.from(playerTextContainer.children)
+        children.forEach(child => {
+            child.style.animationDuration = `${3 / currentAnimationDenominator}s`
+        })
+
+        clearInterval(currentSpinnerIntervalId)
+        currentSpinnerIntervalId = setInterval(slowDownSpinner, intervalTime)
+    }
+
+    // Start the slowing down loop
+    currentSpinnerIntervalId = setInterval(slowDownSpinner, (3 / currentAnimationDenominator) * 1000)
+
+    await sleep(9000)
+    setWinner()
+    await sleep(4000)
+    setSpinner()
+}
+
+const winners = []
+
+// Set winner for the display
+const profileContainersEl = document.getElementById("profile-containers")
+const osuBackgroundEl = document.getElementById("osu-background")
+
+// Set winner
+function setWinner() {
+    // Whoever is player-4 at the time
+    let player4 = document.querySelector('div[data-action="player-4"]')
+    winners.push(player4.dataset.id)
+
+    numberOfWinners = Math.min(winners.length, 2)
+    for (let i = 0; i < numberOfWinners; i++) {
+        // Find Winner
+        const winnerPlayer = findPlayerUsingFind(winners[i])
+        profileContainersEl.children[i].children[0].children[0].setAttribute("src", winnerPlayer.avatar_url)
+        profileContainersEl.children[i].children[1].innerText = winnerPlayer.username
+        profileContainersEl.children[i].style.display = "block"
+
+        // Remove player from remaining players
+        let index = remainingSpinnerPlayers.indexOf(winnerPlayer)
+        if (index > -1) remainingSpinnerPlayers.splice(index, 1)
+    }
+
+    osuBackgroundEl.style.filter = "blur(81.5px)"
+}

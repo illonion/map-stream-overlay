@@ -279,7 +279,8 @@
     top: -94px;
     transform: rotate(4.83deg);
     width: 2676px;
-    /* filter: blur(81.5px); */   
+    filter: blur(0px);
+    transition: 500ms ease;
 }
 
 /* Profile Containers */
@@ -290,6 +291,11 @@
     transform: translateX(-50%) rotate(5.22deg);
     display: flex;
     gap: 43px;
+}
+
+/* Individual Profile Container */
+.individual-profile-container {
+    display: none;
 }
 
 /* Individual Profile Picture */
@@ -384,4 +390,18 @@
     border: 4px solid white;
     border-radius: 20px;
     margin: 0.5em 15%;
+    cursor: pointer;
+}
+.sidebar-button:active {
+    background-color: white;
+    color: #1E68F9;
+}
+
+/* Sidebar Player List */
+#sidebar-player-list {
+    height: 336px;
+    overflow-y: scroll;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
 }
