@@ -13,7 +13,34 @@
 <body>
     <div class="main">
         <div class="chat" id="chat"></div>
+        <div class="timer" id="timer">10:00</div>
     </div>
+
+    <section class="sidebar">
+        <div class="sidebar-title">Timer</div>
+        <section id="normal-timer">
+            <div class="sidebar-text">Set timer for: </div>
+            <div class="sidebar-input-numbers-container">
+                <div><input id="minutes-number" class="sidebar-input" type="number"> <span class="sidebar-input-after">minutes</span></div>
+                <div><input id="seconds-number" class="sidebar-input" type="number"> <span class="sidebar-input-after">seconds</span></div>
+            </div>
+            <button class="sidebar-button" onclick="setAndStartTimer()">Set / Start Timer</button>
+            <button class="sidebar-button" onclick="setMinuteSecondTimer()">Set Timer Only</button>
+            <button class="sidebar-button" onclick="startTimer()">Start Timer Only</button>
+            <div class="sidebar-text timer-error-message" id="timer1-error-message">Make sure your timer is positive!</div>
+        </section>
+        <section id="utc-timer">
+            <div class="sidebar-text">or... set timer for: </div>
+            <div class="utc-time-numbers-container">
+                <input id="hours-number-utc" class="sidebar-input time-input" type="number">:
+                <input id="minutes-number-utc" class="sidebar-input time-input" type="number"> <span class="sidebar-input-after">UTC</span>
+            </div>
+            <button class="sidebar-button" onclick="startUTCTimer()">Start Timer</button>
+            <div class="sidebar-text timer-error-message" id="timer2-error-message">Make sure your hours and minutes are over 0!</div>
+        </section>
+        <button class="sidebar-button light-pink-button" onclick="stopTimer()">Stop Timer</button>
+        <button class="sidebar-button light-pink-button" onclick="resetTimer()">Reset Timer</button>
+    </section>
 
     <script src="index.js"></script>
 </body>
