@@ -1,4 +1,16 @@
 body { margin: 0; }
+
+/* Background Video */
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3840px;
+    height: 2160px;
+    z-index: -1;
+}
+
+/* Whole Page */
 .main {
     margin: 0;
     width: 3840px;
