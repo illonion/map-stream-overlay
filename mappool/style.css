@@ -84,7 +84,7 @@ body {
     right: 55px;
     display: flex;
     align-items: start;
-    /* display: none; */
+    display: none;
 }
 
 /* Team Name */
@@ -164,9 +164,13 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 1342px;
+    max-height: 1191px;
+    overflow: hidden;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
 }
+#mappool-section::-webkit-scrollbar { display: none; }
 #mappool-main-section {
     display: flex;
     justify-content: space-between;
@@ -182,6 +186,7 @@ body {
     box-shadow: 7px 4px 20px 0px rgba(0, 0, 0, 0.5);
 }
 .tb-map-card-container {
+    display: none;
     position: relative;
     width: 892px;
     height: 197px;
@@ -251,7 +256,6 @@ body {
     left: 567px;
     width: 50px;
     height: 50px;
-    background-color: white;
     border-radius: 50%;
 }
 .tb-mod-id {
@@ -260,7 +264,6 @@ body {
     left: 771px;
     width: 86px;
     height: 86px;
-    background-color: white;
     border-radius: 50%;
 }
 .mod-id-nm { background-color: white; }
@@ -346,6 +349,23 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 22px;
+}
+
+/* Tiebreaker Scissors */
+.tb-map-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 59px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    
+}
+.tb-map-scissors {
+    position: absolute;
+    left: 46px;
+    top: 0;
 }
 
 /* Side Bar */
