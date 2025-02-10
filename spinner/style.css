@@ -293,6 +293,12 @@
     width: 2676px;
     filter: blur(0px);
     transition: 500ms ease;
+    overflow: hidden;
+}
+.osu-background-video {
+    position: relative;
+    left: -15%;
+    width: 2676px;
 }
 
 /* Profile Containers */
