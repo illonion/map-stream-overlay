@@ -101,6 +101,7 @@ function createStarDisplay() {
 // Initialise
 async function initialise() {
     await getApi()
+    await getTeams()
     await getMappool()
 }
 initialise()
@@ -311,10 +312,49 @@ function isAutopickFunction() {
     }
 }
 
-// Map id
+// Team information
+const leftTeamBanner = document.getElementById("left-team-banner")
+const rightTeamBanner = document.getElementById("right-team-banner")
+const leftTeamName = document.getElementById("left-team-name")
+const rightTeamName = document.getElementById("right-team-name")
+let currentLeftTeamPlayers = {}
+let currentRightTeamPlayers = {}
+let currentLeftTeamName, currentRightTeamName
+
+// Player lists
+const leftTeamPlayerList = document.getElementById("left-team-player-list")
+const rightTeamPlayerList = document.getElementById("right-team-player-list")
+
+// Load teams
+let allTeams
+async function getTeams() {
+    const response = await fetch("../_data/teams.json");
+    const responseJson = await response.json();
+    allTeams = responseJson;
+}
+const findTeam = teamName => allTeams.find(team => team.team_name.trim() === teamName.trim())
+
+// Map id and md5
 let mapId, mapMd5
+let leftTeamPlayerCount = 0
+let rightTeamPlayerCount = 0
 socket.onmessage = event => {
     const data = JSON.parse(event.data)
+    console.log(data)
+
+    // Team Data
+    if (currentLeftTeamName !== data.tourney.manager.teamName.left) {
+        currentLeftTeamName = data.tourney.manager.teamName.left
+        leftTeamName.innerText = currentLeftTeamName
+        currentLeftTeamPlayers = findTeam(currentLeftTeamName)
+        rightTeamBanner.setAttribute("src", currentLeftTeamPlayers.team_icon)
+    }
+    if (currentRightTeamName !== data.tourney.manager.teamName.right) {
+        currentRightTeamName = data.tourney.manager.teamName.right
+        rightTeamName.innerText = currentRightTeamName
+        currentRightTeamPlayers = findTeam(currentLeftTeamName)
+        leftTeamBanner.setAttribute("src", currentRightTeamPlayers.team_icon)
+    }
     
     if (mapId !== data.menu.bm.id || mapMd5 !== data.menu.bm.md5) {
         mapId = data.menu.bm.id
@@ -342,5 +382,44 @@ socket.onmessage = event => {
                 }
             }
         }
+    }
+
+    // Set Icons
+    leftTeamPlayerCount = 0
+    rightTeamPlayerCount = 0
+    for (let i = 0; i < data.tourney.ipcClients.length; i++) {
+        let currentUserId = data.tourney.ipcClients[i].spectating.userID
+        let currentTeam
+
+        // Find which team this player is a part of
+        if (currentLeftTeamPlayers.player_ids.includes(currentUserId)) {
+            currentTeam = "left"
+        } else if (currentRightTeamPlayers.player_ids.includes(currentUserId)) {
+            currentTeam = "right"
+        }
+
+        if (!currentTeam) continue
+
+        // Set current child
+        let currentChild
+        if (currentTeam === "left" && leftTeamPlayerCount < 4) {
+            currentChild = leftTeamPlayerList.children[leftTeamPlayerCount]
+        } else if (currentTeam === "right" && rightTeamPlayerCount < 4) {
+            currentChild = rightTeamPlayerList.children[rightTeamPlayerCount]
+        }
+
+        // If no child
+        if (!currentChild) continue
+
+        // Set attributes
+        currentChild.children[0].setAttribute("src", `https://a.ppy.sh/${currentUserId}`)
+        currentChild.children[1].innerText = data.tourney.ipcClients[i].spectating.name
+    }
+
+    for (let i = leftTeamPlayerCount; i < 4; i++) {
+        leftTeamPlayerList.children[i].style.display = "none"
+    }
+    for (let i = rightTeamPlayerCount; i < 4; i++) {
+        rightTeamPlayerList.children[i].style.display = "none"
     }
 }

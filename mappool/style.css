@@ -387,6 +387,15 @@ body {
 }
 .column1 { left: 0; }
 .column2 { left: 300px; }
+/* Divider */
+.divider {
+    position: absolute;
+    top: 0;
+    left: 299px;
+    width: 2px;
+    height: inherit;
+    background-color: black;
+}
 /* Side Bar Title */
 .side-bar-title {
     font-size: 32px;
