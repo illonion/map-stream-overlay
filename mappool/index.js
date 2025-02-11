@@ -343,17 +343,17 @@ socket.onmessage = event => {
     console.log(data)
 
     // Team Data
-    if (currentLeftTeamName !== data.tourney.manager.teamName.left) {
-        currentLeftTeamName = data.tourney.manager.teamName.left
+    if (currentLeftTeamName !== data.tourney.manager.teamName.left.trim()) {
+        currentLeftTeamName = data.tourney.manager.teamName.left.trim()
         leftTeamName.innerText = currentLeftTeamName
         currentLeftTeamPlayers = findTeam(currentLeftTeamName)
-        rightTeamBanner.setAttribute("src", currentLeftTeamPlayers.team_icon)
+        if (currentLeftTeamPlayers) leftTeamBanner.setAttribute("src", currentLeftTeamPlayers.team_icon)
     }
-    if (currentRightTeamName !== data.tourney.manager.teamName.right) {
-        currentRightTeamName = data.tourney.manager.teamName.right
+    if (currentRightTeamName !== data.tourney.manager.teamName.right.trim()) {
+        currentRightTeamName = data.tourney.manager.teamName.right.trim()
         rightTeamName.innerText = currentRightTeamName
-        currentRightTeamPlayers = findTeam(currentLeftTeamName)
-        leftTeamBanner.setAttribute("src", currentRightTeamPlayers.team_icon)
+        currentRightTeamPlayers = findTeam(currentRightTeamName)
+        if (currentRightTeamPlayers) rightTeamBanner.setAttribute("src", currentRightTeamPlayers.team_icon)
     }
     
     if (mapId !== data.menu.bm.id || mapMd5 !== data.menu.bm.md5) {
@@ -390,6 +390,8 @@ socket.onmessage = event => {
     for (let i = 0; i < data.tourney.ipcClients.length; i++) {
         let currentUserId = data.tourney.ipcClients[i].spectating.userID
         let currentTeam
+
+        if (!currentLeftTeamPlayers || !currentRightTeamPlayers) continue
 
         // Find which team this player is a part of
         if (currentLeftTeamPlayers.player_ids.includes(currentUserId)) {
