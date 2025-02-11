@@ -373,10 +373,20 @@ body {
     position: absolute;
     top: 0;
     left: 2560px;
-    width: 300px;
+    width: 600px;
     height: 1440px;
     background-color: var(--colour-sidebar-lime);
 }
+
+/* Columns */
+.column {
+    position: absolute;
+    top: 0;
+    height: inherit;
+    width: 300px;
+}
+.column1 { left: 0; }
+.column2 { left: 300px; }
 /* Side Bar Title */
 .side-bar-title {
     font-size: 32px;
@@ -394,9 +404,27 @@ body {
     background-color: transparent;
     border-radius: 20px;
 }
+.side-bar-next-action-button {
+    width: 130px;
+    margin: 8px 5px;
+    height: calc(var(--side-bar-mappool-button-height) * 2)
+}
+#toggle-pick {
+    width: 280px;    
+}
+#sidebar-next-action {
+    font-size: 2em;
+    text-align: center;
+}
+
 .side-bar-button:active {
     color: var(--colour-sidebar-lime);
     background-color: black;
+}
+.side-bar-mappool-controls {
+    width: 270px;
+    margin: 20px 15px 0 15px;
+    font-size: 1.4rem;
 }
 
 /* Full Size Button */

@@ -24,15 +24,7 @@
                 <img class="side-banner" src="static/first-pick.png">
             </div>
             <div class="team-name" id="left-team-name">TEAM KENDRICK</div>
-            <div class="team-stars" id="team-stars-container-left">
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-            </div>
+            <div class="team-stars" id="team-stars-container-left"></div>
             <div class="players-list">
                 <div class="player-profile">
                     <img class="player-profile-picture" alt="Player Profile Picture" src="https://a.ppy.sh/8306102">
@@ -60,15 +52,7 @@
                 <img class="side-banner" src="static/first-pick.png">
             </div>
             <div class="team-name" id="right-team-name">TEAM DRAKE</div>
-            <div class="team-stars" id="team-stars-container-right">
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-                <div class="team-star"></div>
-            </div>
+            <div class="team-stars" id="team-stars-container-right"></div>
             <div class="players-list">
                 <div class="player-profile">
                     <img class="player-profile-picture" alt="Player Profile Picture" src="https://a.ppy.sh/8306102">
@@ -118,21 +102,40 @@
 
     <!-- Side Bar -->
     <div class="side-bar">
-        <div id="first-pick-ban-selection">
-            <div class="side-bar-title">FIRST PICK BAN SELETION</div>
-            <section class="side-bar-first-pick-ban-selection-section" id="side-bar-first-ban-section">
-                <div class="side-bar-sub-text">FIRST BAN: </div>
-                <label for="first-ban-red"><input type="radio" value="red-ban" id="first-ban-red" name="first-ban"> RED TEAM</label><br>
-                <label for="first-ban-blue"><input type="radio" value="blue-ban" id="first-ban-blue" name="first-ban"> BLUE TEAM</label>
-            </section>
-            <section class="side-bar-first-pick-ban-selection-section" id="side-bar-first-pick-section">
-                <div class="side-bar-sub-text">FIRST BAN: </div>
-                <label for="first-pick-red"><input type="radio" value="red-pick" id="first-pick-red" name="first-pick"> RED TEAM</label><br>
-                <label for="first-pick-blue"><input type="radio" value="blue-pick" id="first-pick-blue" name="first-pick"> BLUE TEAM</label>
-            </section>
-            <button class="side-bar-button side-bar-full-length-button" onclick="changeFirstPickBans()">SUBMIT</button>
+        <div class="column column1">
+            <div id="first-pick-ban-selection">
+                <div class="side-bar-title">FIRST PICK BAN SELETION</div>
+                <section class="side-bar-first-pick-ban-selection-section" id="side-bar-first-ban-section">
+                    <div class="side-bar-sub-text">FIRST BAN: </div>
+                    <label for="first-ban-red"><input type="radio" value="red-ban" id="first-ban-red" name="first-ban"> RED TEAM</label><br>
+                    <label for="first-ban-blue"><input type="radio" value="blue-ban" id="first-ban-blue" name="first-ban"> BLUE TEAM</label>
+                </section>
+                <section class="side-bar-first-pick-ban-selection-section" id="side-bar-first-pick-section">
+                    <div class="side-bar-sub-text">FIRST BAN: </div>
+                    <label for="first-pick-red"><input type="radio" value="red-pick" id="first-pick-red" name="first-pick"> RED TEAM</label><br>
+                    <label for="first-pick-blue"><input type="radio" value="blue-pick" id="first-pick-blue" name="first-pick"> BLUE TEAM</label>
+                </section>
+                <button class="side-bar-button side-bar-full-length-button" onclick="changeFirstPickBans()">SUBMIT</button>
+            </div>
+            <div class="side-bar-mappool-controls">
+                Left click (LC) = Red Pick<br>
+                Right click (RC) = Blue Pick<br>
+                Ctrl + LC = Red Ban<br>
+                Ctrl + RC = Blue Ban<br>
+                LShift + LC = Red Protect<br>
+                LShift + RC = Blue Protect
+            </div>
+            <div id="side-bar-mappool"></div>
         </div>
-        <div id="side-bar-mappool"></div>
+        <div class="column column2">
+            <div id="first-pick-ban-selection">
+                <div class="side-bar-title">NEXT AUTO ACTION:</div>
+                <div class="side-bar-sub-text" id="sidebar-next-action"></div>
+                <button class="side-bar-button side-bar-next-action-button" onclick="setNextPick('left')">Left Pick</button>
+                <button class="side-bar-button side-bar-next-action-button" onclick="setNextPick('right')">Right Pick</button>
+                <button class="side-bar-button side-bar-next-action-button" id="toggle-pick" onclick="isAutopickFunction()">Toggle Autopick: OFF</button>
+            </div>
+        </div>
     </div>
     <script defer src="index.js"></script>
 </body>

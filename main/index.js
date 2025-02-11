@@ -36,15 +36,15 @@ function updateStarCount(side, operation) {
     if (currentLeftStars > currentFirstTo) currentLeftStars = currentFirstTo;
     if (currentRightStars > currentFirstTo) currentRightStars = currentFirstTo;
 
-    document.cookie = `currentLeftStars=${currentLeftStars}; path=/`
-    document.cookie = `currentRightStars=${currentRightStars}; path=/`
-    document.cookie = `currentBestOf=${currentBestOf}; path=/`
-
     createStarDisplay()
 }
 
 // Create star display
 function createStarDisplay() {
+    document.cookie = `currentLeftStars=${currentLeftStars}; path=/`
+    document.cookie = `currentRightStars=${currentRightStars}; path=/`
+    document.cookie = `currentBestOf=${currentBestOf}; path=/`
+
     teamStarsContainerLeftEl.innerHTML = "";
     teamStarsContainerRightEl.innerHTML = "";
     let i = 0;
@@ -173,7 +173,7 @@ socket.onmessage = event => {
         let scores = [];
         let currentScoreLeft = 0;
         let currentScoreRight = 0;
-        for (let i = 0; i < data.tourney.manager.ipcClients.length; i++) {
+        for (let i = 0; i < data.tourney.ipcClients.length; i++) {
             let score = data.tourney.ipcClients[i].gameplay.score;
             if (data.tourney.ipcClients[i].gameplay.mods.str.toUpperCase().includes('EZ')) score *= EZMultiplier;
             if (i < teamSize) currentScoreLeft += score;
@@ -249,13 +249,21 @@ socket.onmessage = event => {
     if (ipcState !== data.tourney.manager.ipcState) {
         ipcState = data.tourney.manager.ipcState;
         if (ipcState === 4) setTimeout(() => updateStars = true, 500);
+        else document.cookie = `currentWinner=none; path=/`
     }
 
     // Update stars
     if (updateStars) {
         if (warmupMode) return;
-        if (currentPlayScoreLeft > currentPlayScoreRight) updateStarCount("left", "add");
-        else if (currentPlayScoreRight > currentPlayScoreLeft) updateStarCount("right", "add");
+        if (currentPlayScoreLeft > currentPlayScoreRight) {
+            updateStarCount("left", "add");
+            document.cookie = `currentWinner=left; path=/`
+        }
+        else if (currentPlayScoreRight > currentPlayScoreLeft) {
+            updateStarCount("right", "add");
+            document.cookie = `currentWinner=right; path=/`
+        }
+        updateStars = false
     }
 }
 
