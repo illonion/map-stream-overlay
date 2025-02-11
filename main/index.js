@@ -36,6 +36,10 @@ function updateStarCount(side, operation) {
     if (currentLeftStars > currentFirstTo) currentLeftStars = currentFirstTo;
     if (currentRightStars > currentFirstTo) currentRightStars = currentFirstTo;
 
+    document.cookie = `currentLeftStars=${currentLeftStars}; path=/`
+    document.cookie = `currentRightStars=${currentRightStars}; path=/`
+    document.cookie = `currentBestOf=${currentBestOf}; path=/`
+
     createStarDisplay()
 }
 
