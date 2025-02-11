@@ -7,22 +7,25 @@ function submit() {
         const textareaElValueIndividualSeparated = textareaElValueIndividual[i].split(",")
         const teamData = {
             "team_name": textareaElValueIndividualSeparated[0].trim(),
-            "player1_name": textareaElValueIndividualSeparated[1].trim(),
-            "player2_name": textareaElValueIndividualSeparated[2].trim(),
-            "player3_name": textareaElValueIndividualSeparated[3].trim(),
-            "player4_name": textareaElValueIndividualSeparated[4].trim(),
-            "player5_name": textareaElValueIndividualSeparated[5].trim(),
-            "player6_name": textareaElValueIndividualSeparated[6].trim(),
-            "player7_name": textareaElValueIndividualSeparated[7].trim(),
-            "player8_name": textareaElValueIndividualSeparated[8].trim(),
-            "player1_id": Number(textareaElValueIndividualSeparated[9]),
-            "player2_id": Number(textareaElValueIndividualSeparated[10]),
-            "player3_id": Number(textareaElValueIndividualSeparated[11]),
-            "player4_id": Number(textareaElValueIndividualSeparated[12]),
-            "player5_id": Number(textareaElValueIndividualSeparated[13]),
-            "player6_id": Number(textareaElValueIndividualSeparated[14]),
-            "player7_id": Number(textareaElValueIndividualSeparated[15]),
-            "player8_id": Number(textareaElValueIndividualSeparated[16]),
+            "player_names": [
+                textareaElValueIndividualSeparated[1].trim(),
+                textareaElValueIndividualSeparated[2].trim(),
+                textareaElValueIndividualSeparated[3].trim(),
+                textareaElValueIndividualSeparated[4].trim(),
+                textareaElValueIndividualSeparated[5].trim(),
+                textareaElValueIndividualSeparated[6].trim(),
+                textareaElValueIndividualSeparated[7].trim(),
+                textareaElValueIndividualSeparated[8].trim()],
+            "player_ids": [
+                Number(textareaElValueIndividualSeparated[9]),
+                Number(textareaElValueIndividualSeparated[10]),
+                Number(textareaElValueIndividualSeparated[11]),
+                Number(textareaElValueIndividualSeparated[12]),
+                Number(textareaElValueIndividualSeparated[13]),
+                Number(textareaElValueIndividualSeparated[14]),
+                Number(textareaElValueIndividualSeparated[15]),
+                Number(textareaElValueIndividualSeparated[16]),
+            ],
             "team_icon": textareaElValueIndividualSeparated[17].trim()
         }
         teams.push(teamData)
