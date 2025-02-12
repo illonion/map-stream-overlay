@@ -44,9 +44,18 @@ function createStarDisplay() {
     document.cookie = `currentLeftStars=${currentLeftStars}; path=/`
     document.cookie = `currentRightStars=${currentRightStars}; path=/`
     document.cookie = `currentBestOf=${currentBestOf}; path=/`
-    if (currentLeftStars >= currentFirstTo) document.cookie = `currentWinningTeamName=${currentLeftTeamName}; path=/`
-    else if (currentRightStars >= currentFirstTo) document.cookie = `currentWinningTeamName=${currentRightTeamName}; path=/`
-    else document.cookie = `currentWinningTeamName=none; path=/`
+    if (currentLeftStars >= currentFirstTo) {
+        document.cookie = `currentWinningTeamName=${currentTeamNameLeft}; path=/`
+        document.cookie = `currentWinningTeamColour=RED; path=/`
+    }
+    else if (currentRightStars >= currentFirstTo) {
+        document.cookie = `currentWinningTeamName=${currentTeamNameRight}; path=/`
+        document.cookie = `currentWinningTeamColour=BLUE; path=/`
+    }
+    else {
+        document.cookie = `currentWinningTeamName=none; path=/`
+        document.cookie = `currentWinningTeamColour=; path=/`
+    }
 
     teamStarsContainerLeftEl.innerHTML = "";
     teamStarsContainerRightEl.innerHTML = "";

@@ -22,7 +22,13 @@ setInterval(() => {
         const currentTeam = findTeam(currentTeamName)
         if (currentTeam) {
             // Set details of team
-            teamColour.innerText = `TEAM ${getCookie("currentWinningTeamColour").toUpperCase()}`
+            // Set team colour
+            const teamWinningColour = getCookie("currentWinningTeamColour").toUpperCase()
+            teamColour.innerText = `TEAM ${teamWinningColour}`
+            if (teamWinningColour === "RED") teamColour.style.backgroundColor = "var(--red)"
+            else teamColour.style.backgroundColor = "var(--blue)"
+            
+            // Set other details
             teamName.innerText = currentTeamName
             teamLogo.setAttribute("src", currentTeam.team_icon)
             
