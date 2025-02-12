@@ -3,6 +3,16 @@
     --teamIconSize: 989px;
 }
 
+/* Background Video */
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3840px;
+    height: 2160px;
+    z-index: -1;
+}
+
 body { margin: 0; }
 .main {
     margin: 0;

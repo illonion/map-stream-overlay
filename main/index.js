@@ -44,6 +44,9 @@ function createStarDisplay() {
     document.cookie = `currentLeftStars=${currentLeftStars}; path=/`
     document.cookie = `currentRightStars=${currentRightStars}; path=/`
     document.cookie = `currentBestOf=${currentBestOf}; path=/`
+    if (currentLeftStars >= currentFirstTo) document.cookie = `currentWinningTeamName=${currentLeftTeamName}; path=/`
+    else if (currentRightStars >= currentFirstTo) document.cookie = `currentWinningTeamName=${currentRightTeamName}; path=/`
+    else document.cookie = `currentWinningTeamName=none; path=/`
 
     teamStarsContainerLeftEl.innerHTML = "";
     teamStarsContainerRightEl.innerHTML = "";
@@ -177,7 +180,6 @@ socket.onmessage = event => {
         }
 
         // Animate score
-        console.log(currentScoreLeft, currentScoreRight)
         animateScore("left", currentScoreLeft);
         animateScore("right", currentScoreRight);
     }
