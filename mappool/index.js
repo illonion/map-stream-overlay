@@ -471,7 +471,7 @@ function mappoolManagementSelect(element) {
     currentSidebarTileNumber = undefined
     currentSidebarModId = undefined
 
-    if (currentSidebarAction === "setTile") {
+    if (currentSidebarAction === "setTile" || currentSidebarAction === "removeTile") {
         // Which tile?
         const whichTileHeader = createHeader("tile")
 
@@ -496,20 +496,24 @@ function mappoolManagementSelect(element) {
             whichPickConttainer.append(button)
         }
 
-        // Which action?
-        const whichActionHeader = createHeader("action")
+        sidebarMappoolSection.append(whichTileHeader, tileContainer)
 
-        // Which action container
-        const setTileSelect = document.createElement("select")
-        setTileSelect.classList.add("mappool-management-select")
-        setTileSelect.setAttribute("id", "set-action-select")
-        setTileSelect.setAttribute("size", 3)
-        // Set Options
-        setTileSelect.append(createSetOption('setProtect','Set Protect'))
-        setTileSelect.append(createSetOption('setBan','Set Ban'))
-        setTileSelect.append(createSetOption('setPick','Set Pick'))
+        if (currentSidebarAction === "setTile") {
+            // Which action?
+            const whichActionHeader = createHeader("action")
 
-        sidebarMappoolSection.append(whichTileHeader, tileContainer, whichPickHeader, whichPickConttainer, whichActionHeader, setTileSelect)
+            // Which action container
+            const setTileSelect = document.createElement("select")
+            setTileSelect.classList.add("mappool-management-select")
+            setTileSelect.setAttribute("id", "set-action-select")
+            setTileSelect.setAttribute("size", 3)
+            // Set Options
+            setTileSelect.append(createSetOption('setProtect','Set Protect'))
+            setTileSelect.append(createSetOption('setBan','Set Ban'))
+            setTileSelect.append(createSetOption('setPick','Set Pick'))
+
+            sidebarMappoolSection.append(whichPickHeader, whichPickConttainer, whichActionHeader, setTileSelect)
+        }
     }
 
     // Apply changes button
@@ -521,6 +525,10 @@ function mappoolManagementSelect(element) {
     switch (currentSidebarAction) {
         case "setTile":
             applyChanges.setAttribute("onclick", "setTile()")
+            break
+        case "removeTile":
+            applyChanges.setAttribute("onclick", "removeTile()")
+            break
     }
 
     sidebarMappoolSection.append(applyChanges)
@@ -620,4 +628,14 @@ function setTile() {
         mapActionText.classList.add("map-card-ban-text", `map-card-colour-${currentSidebarTeam === "R"? "pink" : "blue"}`)
         mapActionText.innerText = "P#"
     }
+}
+
+// Remove Tile
+function removeTile() {
+    if (!currentSidebarTeam || currentSidebarTileNumber === undefined) return
+    const currentTile = (currentSidebarTeam === "R")? mappoolSectionLeftEl.children[currentSidebarTileNumber] : mappoolSectionRightEl.children[currentSidebarTileNumber]
+
+    // Apply information
+    currentTile.style.display = "none"
+    currentTile.removeAttribute("data-mappool-section-id")
 }
