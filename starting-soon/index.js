@@ -117,6 +117,12 @@ class UTCTimer {
         }
     }
 
+    reset() {
+        this.stop()
+        this.remainingSeconds = 0
+        elements.display.textContent = "00:00"
+    }
+
     updateDisplay() {
         const currentTime = new Date().getTime()
         let timeDiff = this.targetTime - currentTime
@@ -146,15 +152,25 @@ const countdownTimer = new CountdownTimer()
 const utcTimer = new UTCTimer()
 
 // Global functions for HTML buttons
-window.setAndStartTimer = () => countdownTimer.setAndStart()
+window.setAndStartTimer = () => {
+    utcTimer.reset()
+    countdownTimer.setAndStart()
+}
 window.setMinuteSecondTimer = () => countdownTimer.setTime()
-window.startTimer = () => countdownTimer.start()
+window.startTimer = () => {
+    utcTimer.reset()
+    countdownTimer.start()
+}
 window.stopTimer = () => {
     countdownTimer.stop()
     utcTimer.stop()
 }
-window.resetTimer = () => countdownTimer.reset()
+window.resetTimer = () => {
+    countdownTimer.reset()
+    utcTimer.reset()
+}
 window.startUTCTimer = () => {
+    utcTimer.reset()
     countdownTimer.reset()
     utcTimer.start()
 }
