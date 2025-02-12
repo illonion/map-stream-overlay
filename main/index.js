@@ -177,6 +177,7 @@ socket.onmessage = event => {
         }
 
         // Animate score
+        console.log(currentScoreLeft, currentScoreRight)
         animateScore("left", currentScoreLeft);
         animateScore("right", currentScoreRight);
     }
@@ -277,7 +278,7 @@ function updateTeamName(currentTeamName, newTeamName, teamNameEl, teamNameHighli
 function animateScore(side, score) {
     // Determine which variables to use based on the side
     const currentScore = side === "left" ? currentPlayScoreLeft : currentPlayScoreRight;
-    const targetScore = side === "left" ? score.left : score.right;
+    const targetScore = score
     const scoreElement = side === "left" ? playScoreLeftEl : playScoreRightEl;
     const scoreBarElement = side === "left" ? scoreBarLeftFillEl : scoreBarRightfillEl;
     
