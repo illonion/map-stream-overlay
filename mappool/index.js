@@ -184,7 +184,8 @@ initialise()
 const mappoolSectionEl = document.getElementById("mappool-section")
 const mappoolSectionLeftEl = document.getElementById("mappool-section-left")
 const mappoolSectionRightEl = document.getElementById("mappool-section-right")
-let lastPickedTile
+let previousPickedTile
+let currentPickedTile
 function mapClickEvent(event) {
     // Team
     let team
@@ -247,6 +248,9 @@ function mapClickEvent(event) {
 
     // Scroll the mappool section
     mappoolSectionEl.scrollTop = mappoolSectionEl.scrollHeight
+
+    previousPickedTile = currentPickedTile
+    currentPickedTile = currentTile
 }
 
 // Change first pick bans
@@ -290,12 +294,12 @@ setInterval(() => {
 
     // Set winner of map
     const winnerOfMap = getCookie("currentWinner")
-    if (lastPickedTile && winnerOfMap !== "none" && winnerOfMap) {
-        lastPickedTile.children[6].style.display = "block"
+    if (currentPickedTile && winnerOfMap !== "none" && winnerOfMap) {
+        currentPickedTile.children[6].style.display = "block"
         if (winnerOfMap === "left") {
-            lastPickedTile.children[6].children[1].classList.add("map-card-colour-pink")
+            currentPickedTile.children[6].children[1].classList.add("map-card-colour-pink")
         } else {
-            lastPickedTile.children[6].children[1].classList.add("map-card-colour-blue")
+            currentPickedTile.children[6].children[1].classList.add("map-card-colour-blue")
         }
         document.cookie = "currentWinner=none; path=/"
     }
@@ -305,8 +309,11 @@ setInterval(() => {
         currentLeftStars >= currentFirstTo - 1 &&
         currentRightStars >= currentFirstTo - 1
     ) {
+        previousPickedTile = currentPickedTile
+        currentPickedTile = tbCardMapIndividual
         tbCardMapIndividual.style.display = "block"
     } else {
+        currentPickedTile = previousPickedTile
         tbCardMapIndividual.style.display = "none"
     }
 
@@ -471,6 +478,7 @@ function mappoolManagementSelect(element) {
     currentSidebarTileNumber = undefined
     currentSidebarModId = undefined
 
+    // Set and remove tile
     if (currentSidebarAction === "setTile" || currentSidebarAction === "removeTile") {
         // Which tile?
         const whichTileHeader = createHeader("tile")
@@ -482,23 +490,23 @@ function mappoolManagementSelect(element) {
         createTileOptions(mappoolSectionLeftEl, "R", tileContainer)
         createTileOptions(mappoolSectionRightEl, "B", tileContainer)
 
-        // Which pick?
-        const whichPickHeader = createHeader("pick")
-
-        // Which pick container
-        const whichPickConttainer = document.createElement("div")
-        whichPickConttainer.classList.add("side-bar-tile-container")
-        for (let i = 0; i < allBeatmaps.length; i++) {
-            const button = document.createElement("button")
-            button.classList.add("tile-mod-id-button")
-            button.setAttribute("onclick", `selectModId(${allBeatmaps[i].beatmapId},this)`)
-            button.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
-            whichPickConttainer.append(button)
-        }
-
         sidebarMappoolSection.append(whichTileHeader, tileContainer)
 
         if (currentSidebarAction === "setTile") {
+            // Which pick?
+            const whichPickHeader = createHeader("pick")
+
+            // Which pick container
+            const whichPickConttainer = document.createElement("div")
+            whichPickConttainer.classList.add("side-bar-tile-container")
+            for (let i = 0; i < allBeatmaps.length; i++) {
+                const button = document.createElement("button")
+                button.classList.add("tile-mod-id-button")
+                button.setAttribute("onclick", `selectModId(${allBeatmaps[i].beatmapId},this)`)
+                button.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
+                whichPickConttainer.append(button)
+            }
+
             // Which action?
             const whichActionHeader = createHeader("action")
 
@@ -516,6 +524,35 @@ function mappoolManagementSelect(element) {
         }
     }
 
+    if (currentSidebarAction === "setWinner") {
+        // Which tile?
+        const whichTileHeader = createHeader("tile")
+
+        // Create Tile
+        const tileContainer = document.createElement("div")
+        tileContainer.classList.add("side-bar-tile-container")
+        createPickOnlyTileOption(mappoolSectionLeftEl, "R", tileContainer)
+        createPickOnlyTileOption(mappoolSectionRightEl, "B", tileContainer)
+
+        sidebarMappoolSection.append(whichTileHeader, tileContainer)
+
+        if (currentSidebarAction === "setWinner") {
+            // Which team?
+            const whichTeamHeader = createHeader("team")
+
+            // Create teams
+            const setTeamSelect = document.createElement("select")
+            setTeamSelect.classList.add("mappool-management-select")
+            setTeamSelect.setAttribute("id", "set-team-select")
+            setTeamSelect.setAttribute("size", 2)
+            // Team Options
+            setTeamSelect.append(createSetOption('red','Red'))
+            setTeamSelect.append(createSetOption('blue','Blue'))
+
+            sidebarMappoolSection.append(whichTeamHeader, setTeamSelect)
+        }
+    }
+
     // Apply changes button
     const applyChanges = document.createElement("button")
     applyChanges.classList.add("side-bar-button", "side-bar-full-length-button")
@@ -528,6 +565,9 @@ function mappoolManagementSelect(element) {
             break
         case "removeTile":
             applyChanges.setAttribute("onclick", "removeTile()")
+            break
+        case "setWinner":
+            applyChanges.setAttribute("onclick", "setWinner()")
             break
     }
 
@@ -557,6 +597,26 @@ function createTileOptions(element, colour, tileContainer) {
             else if (action === "B&") button.innerText = `${colour} B& ${text}`
             else button.innerText = `${colour} Pi ${text}`
         } else button.innerText = `${colour} Act ${i + 1}`
+
+        tileContainer.append(button)
+    }
+}
+
+// Create pick only tile options
+function createPickOnlyTileOption(element, colour, tileContainer) {
+    for (let i = 0; i < element.childElementCount; i++) {
+        // Get action
+        const action = element.children[i].children[6].children[0].innerText
+        if (!element.children[i].dataset.mappoolSectionId || action === "P#" || action === "B&") continue
+
+        // Create button
+        const button = document.createElement("button")
+        button.classList.add("tile-action-button")
+        button.setAttribute("onclick",`selectTile("${colour}",${i}, this)`)
+
+        // Set text
+        const text = element.children[i].children[3].children[1].innerText
+        button.innerText = `${colour} Pi ${text}`
 
         tileContainer.append(button)
     }
@@ -638,4 +698,23 @@ function removeTile() {
     // Apply information
     currentTile.style.display = "none"
     currentTile.removeAttribute("data-mappool-section-id")
+}
+
+// Set Winner
+function setWinner() {
+    const setTeamSelect = document.getElementById("set-team-select")
+    if (!currentSidebarTeam || currentSidebarTileNumber === undefined || !setTeamSelect.value) return
+
+    const currentTile = (currentSidebarTeam === "R")? mappoolSectionLeftEl.children[currentSidebarTileNumber] : mappoolSectionRightEl.children[currentSidebarTileNumber]
+    currentTile.children[6].style.display = "block"
+    currentTile.children[6].children[0].classList.add(`map-card-colour-${setTeamSelect.value === "red"? "pink" : "blue"}`)
+}
+
+// Remove winner
+function removeWinner() {
+    const setTeamSelect = document.getElementById("set-team-select")
+    if (!currentSidebarTeam || currentSidebarTileNumber === undefined || !setTeamSelect.value) return
+
+    const currentTile = (currentSidebarTeam === "R")? mappoolSectionLeftEl.children[currentSidebarTileNumber] : mappoolSectionRightEl.children[currentSidebarTileNumber]
+    currentTile.children[6].style.display = "none"
 }

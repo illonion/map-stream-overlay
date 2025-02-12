@@ -117,6 +117,16 @@
                 </section>
                 <button class="side-bar-button side-bar-full-length-button" onclick="changeFirstPickBans()">SUBMIT</button>
             </div>
+            <div id="first-pick-ban-selection">
+                <div class="side-bar-title">NEXT AUTO ACTION:</div>
+                <div class="side-bar-sub-text" id="sidebar-next-action"></div>
+                <button class="side-bar-button side-bar-next-action-button" onclick="setNextPick('left')">Left Pick</button>
+                <button class="side-bar-button side-bar-next-action-button" onclick="setNextPick('right')">Right Pick</button>
+                <button class="side-bar-button side-bar-next-action-button" id="toggle-pick" onclick="isAutopickFunction()">Toggle Autopick: OFF</button>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="column column2">
             <div class="side-bar-mappool-controls">
                 Left click (LC) = Red Pick<br>
                 Right click (RC) = Blue Pick<br>
@@ -126,16 +136,6 @@
                 LShift + RC = Blue Protect
             </div>
             <div id="side-bar-mappool"></div>
-        </div>
-        <div class="divider"></div>
-        <div class="column column2">
-            <div id="first-pick-ban-selection">
-                <div class="side-bar-title">NEXT AUTO ACTION:</div>
-                <div class="side-bar-sub-text" id="sidebar-next-action"></div>
-                <button class="side-bar-button side-bar-next-action-button" onclick="setNextPick('left')">Left Pick</button>
-                <button class="side-bar-button side-bar-next-action-button" onclick="setNextPick('right')">Right Pick</button>
-                <button class="side-bar-button side-bar-next-action-button" id="toggle-pick" onclick="isAutopickFunction()">Toggle Autopick: OFF</button>
-            </div>
         </div>
         <div class="divider divider-2"></div>
         <div class="column column3">
