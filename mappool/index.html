@@ -137,6 +137,18 @@
                 <button class="side-bar-button side-bar-next-action-button" id="toggle-pick" onclick="isAutopickFunction()">Toggle Autopick: OFF</button>
             </div>
         </div>
+        <div class="divider divider-2"></div>
+        <div class="column column3">
+            <div id="sidebar-mappool-section">
+                <div class="side-bar-title">SIDEBAR MAPPOOL SECTION</div>
+                <select class="mappool-management-select" id="mappool-management-select" size="4" onchange="mappoolManagementSelect(this)">
+                    <option value="setTile">Set Tile</option>
+                    <option value="removeTile">Remove Tile</option>
+                    <option value="setWinner">Set Winner</option>
+                    <option value="removeWinner">Remove Winner</option>
+                </select>
+            </div>
+        </div>
     </div>
     <script defer src="index.js"></script>
 </body>

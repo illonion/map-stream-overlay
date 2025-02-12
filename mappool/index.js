@@ -457,3 +457,167 @@ socket.onmessage = event => {
         rightTeamPlayerList.children[i].style.display = "none"
     }
 }
+
+// Mappool Management Select
+const sidebarMappoolSection = document.getElementById("sidebar-mappool-section")
+let currentSidebarAction
+function mappoolManagementSelect(element) {
+    while (sidebarMappoolSection.childElementCount > 2) {
+        sidebarMappoolSection.removeChild(sidebarMappoolSection.lastElementChild)
+    }
+    
+    currentSidebarAction = element.value
+    currentSidebarTeam = undefined
+    currentSidebarTileNumber = undefined
+    currentSidebarModId = undefined
+
+    if (currentSidebarAction === "setTile") {
+        // Which tile?
+        const whichTileHeader = createHeader("tile")
+
+        // Create Tile
+        const tileContainer = document.createElement("div")
+        tileContainer.classList.add("side-bar-tile-container")
+        
+        createTileOptions(mappoolSectionLeftEl, "R", tileContainer)
+        createTileOptions(mappoolSectionRightEl, "B", tileContainer)
+
+        // Which pick?
+        const whichPickHeader = createHeader("pick")
+
+        // Which pick container
+        const whichPickConttainer = document.createElement("div")
+        whichPickConttainer.classList.add("side-bar-tile-container")
+        for (let i = 0; i < allBeatmaps.length; i++) {
+            const button = document.createElement("button")
+            button.classList.add("tile-mod-id-button")
+            button.setAttribute("onclick", `selectModId(${allBeatmaps[i].beatmapId},this)`)
+            button.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
+            whichPickConttainer.append(button)
+        }
+
+        // Which action?
+        const whichActionHeader = createHeader("action")
+
+        // Which action container
+        const setTileSelect = document.createElement("select")
+        setTileSelect.classList.add("mappool-management-select")
+        setTileSelect.setAttribute("id", "set-action-select")
+        setTileSelect.setAttribute("size", 3)
+        // Set Options
+        setTileSelect.append(createSetOption('setProtect','Set Protect'))
+        setTileSelect.append(createSetOption('setBan','Set Ban'))
+        setTileSelect.append(createSetOption('setPick','Set Pick'))
+
+        sidebarMappoolSection.append(whichTileHeader, tileContainer, whichPickHeader, whichPickConttainer, whichActionHeader, setTileSelect)
+    }
+
+    // Apply changes button
+    const applyChanges = document.createElement("button")
+    applyChanges.classList.add("side-bar-button", "side-bar-full-length-button")
+    applyChanges.innerText = "APPLY CHANGES"
+    applyChanges.style.height = "calc(var(--side-bar-mappool-button-height) * 2)"
+
+    switch (currentSidebarAction) {
+        case "setTile":
+            applyChanges.setAttribute("onclick", "setTile()")
+    }
+
+    sidebarMappoolSection.append(applyChanges)
+}
+
+// Create Header
+function createHeader(text) {
+    const header = document.createElement("div")
+    header.classList.add("side-bar-title")
+    header.innerText = `WHICH ${text.toUpperCase()}?`
+    return header
+}
+
+// Create tile options
+function createTileOptions(element, colour, tileContainer) {
+    for (let i = 0; i < element.childElementCount; i++) {
+        const button = document.createElement("button")
+        button.classList.add("tile-action-button")
+        button.setAttribute("onclick",`selectTile("${colour}",${i}, this)`)
+
+        // Set text
+        if (element.children[i].dataset.mappoolSectionId) {
+            const action = element.children[i].children[6].children[0].innerText
+            const text = element.children[i].children[3].children[1].innerText
+            if (action === "P#") button.innerText = `${colour} P# ${text}`
+            else if (action === "B&") button.innerText = `${colour} B& ${text}`
+            else button.innerText = `${colour} Pi ${text}`
+        } else button.innerText = `${colour} Act ${i + 1}`
+
+        tileContainer.append(button)
+    }
+}
+
+// Select tile button
+const tileActionButtons = document.getElementsByClassName("tile-action-button")
+let currentSidebarTeam, currentSidebarTileNumber
+function selectTile(colour, number, element) {
+    currentSidebarTeam = colour
+    currentSidebarTileNumber = number
+
+    for (let i = 0; i < tileActionButtons.length; i++) {
+        tileActionButtons[i].style.backgroundColor = "transparent"
+    }
+    element.style.backgroundColor = "#CECECE"
+}
+
+// Create set option
+function createSetOption(value, text) {
+    const setOption = document.createElement("option")
+    setOption.setAttribute("value", value)
+    setOption.innerText = text
+    return setOption
+}
+
+// Select Mod Id
+const tileModIdButtons = document.getElementsByClassName("tile-mod-id-button")
+let currentSidebarModId
+function selectModId(modId, element) {
+    currentSidebarModId = modId
+
+    for (let i = 0; i < tileModIdButtons.length; i++) {
+        tileModIdButtons[i].style.backgroundColor = "transparent"
+    }
+    element.style.backgroundColor = "#CECECE"
+}
+
+// Set tile
+function setTile() {
+    const setActionSelect = document.getElementById("set-action-select")
+    console.log(currentSidebarModId, currentSidebarTeam, currentSidebarTileNumber, setActionSelect.value)
+    if (!currentSidebarModId || !currentSidebarTeam || currentSidebarTileNumber === undefined || !setActionSelect.value) return
+
+    // Find map and tile
+    console.log(currentSidebarModId, currentSidebarTeam, currentSidebarTileNumber, setActionSelect.value)
+    const currentMap = findMapInAllBeatmaps(currentSidebarModId)
+    const currentMapJson = findMapInAllBeatmapsJson(currentSidebarModId)
+    const currentTile = (currentSidebarTeam === "R")? mappoolSectionLeftEl.children[currentSidebarTileNumber] : mappoolSectionRightEl.children[currentSidebarTileNumber]
+    
+    // Apply information
+    currentTile.style.display = "block"
+    currentTile.dataset.mappoolSectionId = currentMapJson.beatmap_id
+    currentTile.children[1].style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${currentMapJson.beatmapset_id}/covers/cover.jpg")`
+    currentTile.children[2].children[0].innerText = currentMapJson.title
+    currentTile.children[2].children[1].innerText = currentMapJson.artist
+    currentTile.children[3].children[1].innerText = currentMap.mod + currentMap.order
+    currentTile.children[4].children[0].innerText = currentMapJson.creator
+    currentTile.children[5].children[0].innerText = `${Math.round(Number(currentMapJson.difficultyrating) * 100) / 100}`
+    let mapActionText = currentTile.children[6].children[0]
+    if (setActionSelect.value === "setPick") {
+        mapActionText.classList.add("map-card-win-text")
+        mapActionText.innerText = "WIN"
+        currentTile.children[6].style.display = "none"
+    } else if (setActionSelect.value === "setBan") {
+        mapActionText.classList.add("map-card-ban-text", `map-card-colour-${currentSidebarTeam === "R"? "pink" : "blue"}`)
+        mapActionText.innerText = "B&"
+    } else if (setActionSelect.value === "setProtect") {
+        mapActionText.classList.add("map-card-ban-text", `map-card-colour-${currentSidebarTeam === "R"? "pink" : "blue"}`)
+        mapActionText.innerText = "P#"
+    }
+}
