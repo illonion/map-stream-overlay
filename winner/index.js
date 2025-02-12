@@ -30,7 +30,7 @@ setInterval(() => {
             
             // Set other details
             teamName.innerText = currentTeamName
-            teamLogo.setAttribute("src", currentTeam.team_icon)
+            teamLogo.style.backgroundImage = `url("currentTeam.team_icon")`
             
             // Set player names
             playerNames.innerHTML = ""

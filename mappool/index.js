@@ -253,6 +253,9 @@ function mapClickEvent(event) {
 const sideBannerContainerLeft = document.getElementById("side-banner-container-left")
 const sideBannerContainerRight = document.getElementById("side-banner-container-right")
 function changeFirstPickBans() {
+    sideBannerContainerLeft.style.display = "none"
+    sideBannerContainerRight.style.display = "none"
+
     // Get bans
     const selectedFirstBan = document.querySelector('input[name="first-ban"]:checked')
     sideBannerContainerLeft.children[0].style.display = "none"
@@ -262,8 +265,10 @@ function changeFirstPickBans() {
         const selectedFirstBanValue = selectedFirstBan.value
         if (selectedFirstBanValue === "red-ban") {
             sideBannerContainerLeft.children[0].style.display = "block"
+            sideBannerContainerLeft.style.display = "flex"
         } else if (selectedFirstBanValue === "blue-ban") {
             sideBannerContainerRight.children[0].style.display = "block"
+            sideBannerContainerRight.style.display = "flex"
         }
     }
 
@@ -276,8 +281,10 @@ function changeFirstPickBans() {
         const selectedFirstPickValue = selectedFirstPick.value
         if (selectedFirstPickValue === "red-pick") {
             sideBannerContainerLeft.children[1].style.display = "block"
+            sideBannerContainerLeft.style.display = "flex"
         } else if (selectedFirstPickValue === "blue-pick") {
             sideBannerContainerRight.children[1].style.display = "block"
+            sideBannerContainerRight.style.display = "flex"
         }
     }
 }
@@ -508,7 +515,7 @@ function mappoolManagementSelect(element) {
         }
     }
 
-    if (currentSidebarAction === "setWinner") {
+    if (currentSidebarAction === "setWinner" || currentSidebarAction === "removeWinner" ) {
         // Which tile?
         const whichTileHeader = createHeader("tile")
 
@@ -552,6 +559,9 @@ function mappoolManagementSelect(element) {
             break
         case "setWinner":
             applyChanges.setAttribute("onclick", "setWinner()")
+            break
+        case "removeWinner":
+            applyChanges.setAttribute("onclick", "removeWinner()")
             break
     }
 
@@ -642,7 +652,6 @@ function selectModId(modId, element) {
 // Set tile
 function setTile() {
     const setActionSelect = document.getElementById("set-action-select")
-    console.log(currentSidebarModId, currentSidebarTeam, currentSidebarTileNumber, setActionSelect.value)
     if (!currentSidebarModId || !currentSidebarTeam || currentSidebarTileNumber === undefined || !setActionSelect.value) return
 
     // Find map and tile
@@ -663,14 +672,17 @@ function setTile() {
     let mapActionText = currentTile.children[6].children[0]
     if (setActionSelect.value === "setPick") {
         mapActionText.classList.add("map-card-win-text")
+        mapActionText.classList.remove("map-card-ban-text")
         mapActionText.innerText = "WIN"
         currentTile.children[6].style.display = "none"
     } else if (setActionSelect.value === "setBan") {
         mapActionText.classList.add("map-card-ban-text", `map-card-colour-${currentSidebarTeam === "R"? "pink" : "blue"}`)
         mapActionText.innerText = "B&"
+        currentTile.children[6].style.display = "block"
     } else if (setActionSelect.value === "setProtect") {
         mapActionText.classList.add("map-card-ban-text", `map-card-colour-${currentSidebarTeam === "R"? "pink" : "blue"}`)
         mapActionText.innerText = "P#"
+        currentTile.children[6].style.display = "block"
     }
 }
 

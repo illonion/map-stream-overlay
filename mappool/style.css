@@ -82,7 +82,6 @@ body {
     position: absolute;
     top: -11px;
     right: 55px;
-    display: flex;
     align-items: start;
     display: none;
 }
