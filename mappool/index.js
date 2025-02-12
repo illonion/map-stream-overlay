@@ -20,7 +20,7 @@ const tbCardMapIndividual = document.getElementById("tb-card-map-individual")
 
 // Fetch data with Fetch API
 const sideBarMappoolEl = document.getElementById("side-bar-mappool")
-let currentBestOf = 0, currentFirstTo = 0, currentLeftStars = 0, currentRightStars = 0;
+let currentBestOf = 0, currentFirstTo = 0, currentLeftStars = 0, currentRightStars = 0, currentBanCount = 0, currentTotalActions = 0;
 let allBeatmaps = [], allBeatmapsJson = []
 async function getMappool() {
     const response = await fetch("../_data/beatmaps.json");
@@ -30,15 +30,21 @@ async function getMappool() {
     // Set best of and first to
     switch (responseJson.roundName) {
         case "ROUND OF 32": case "ROUND OF 16":
-            currentBestOf = 9; break;
+            currentBestOf = 9; currentBanCount = 2; break;
         case "QUARTERFINALS": case "SEMIFINALS":
-            currentBestOf = 11; break;
+            currentBestOf = 11; currentBanCount = 2; break;
         case "FINALS": case "GRAND FINALS":
-            currentBestOf = 13; break;
+            currentBestOf = 13; currentBanCount = 3; break;
     }
     currentFirstTo = Math.ceil(currentBestOf / 2);
     
     createStarDisplay();
+
+    // Put all actions in there
+    currentTotalActions = currentFirstTo + currentBanCount
+    for (let i = 0; i < currentTotalActions * 2; i++) {
+        createPanels(i % 2 === 0? "red" : "blue")
+    }
 
     // Create side bar mappool buttons
     sideBarMappoolEl.innerHTML = ""
@@ -75,6 +81,74 @@ async function getMappool() {
 
 const findMapInAllBeatmaps = beatmapId => allBeatmaps.find(beatmap => beatmap.beatmapId == beatmapId)
 const findMapInAllBeatmapsJson = beatmapId => allBeatmapsJson.find(beatmap => beatmap.beatmap_id == beatmapId)
+
+// Create all panels
+function createPanels(team) {
+    // Make map card
+    const mapCard = document.createElement("div")
+    mapCard.classList.add("map-card")
+    
+    // Pick Image
+    const pickImage = document.createElement("img")
+    pickImage.setAttribute("src", `static/${team === "red" ? "left" : "right"}-pick.png`)
+
+    // Map Card Background
+    const mapCardBackground = document.createElement("div")
+    mapCardBackground.classList.add("map-card-background")
+    mapCardBackground.style.backgroundImage = `url("")`
+
+    // Map Details
+    const mapDetails = document.createElement("div")
+    mapDetails.classList.add("map-details")
+    // Song Name
+    const songName = document.createElement("div")
+    songName.classList.add("song-name")
+    // Song Artist
+    const songArtist = document.createElement("div")
+    songArtist.classList.add("song-artist")
+    mapDetails.append(songName, songArtist)
+
+    // Mod ID
+    const modId = document.createElement("div")
+    modId.classList.add("mod-id")
+    // Mod Mask
+    const modMask = document.createElement("img")
+    modMask.classList.add("mod-mask")
+    modMask.setAttribute("src", "static/mask.png")
+    // Mod Text
+    const modText = document.createElement("div")
+    modText.classList.add("mod-text")
+    modId.append(modMask, modText)
+
+    // Song Mapper
+    const songMapper = document.createElement("div")
+    songMapper.classList.add("song-mapper")
+    // Song Mapper Name
+    const songMapperName = document.createElement("span")
+    songMapperName.classList.add("map-detail-lime-bold")
+    songMapper.append("mapped by ", songMapperName)
+
+    // Star Rating
+    const starRating = document.createElement("div")
+    starRating.classList.add("star-rating")
+    // Star Rating Number
+    const starRatingNumber = document.createElement("span")
+    starRatingNumber.classList.add("map-detail-lime-bold")
+    starRating.append("star rating // ", starRatingNumber)
+
+    // Map Card Action
+    const mapCardAction = document.createElement("div")
+    mapCardAction.classList.add("map-card-action")
+    // Map Card Action Tasks
+    const mapActionText = document.createElement("div")
+
+    mapCardAction.append(mapActionText)
+    mapCard.append(pickImage, mapCardBackground, mapDetails, modId, songMapper, starRating, mapCardAction)
+    mapCard.style.display = "none"
+    
+    const mappoolSectionElement = (team === "red")? mappoolSectionLeftEl : mappoolSectionRightEl
+    mappoolSectionElement.append(mapCard)
+}
 
 // Create star display
 const teamStarsContainerRightEl = document.getElementById("team-stars-container-right")
@@ -130,74 +204,39 @@ function mapClickEvent(event) {
     console.log(this.dataset.id, allBeatmapsMap, allBeatmapsJsonMap)
     if (!allBeatmapsMap || !allBeatmapsJsonMap) return
 
-    // Make map card
-    const mapCard = document.createElement("div")
-    mapCard.classList.add("map-card")
-    mapCard.dataset.mapSelectionId = this.dataset.id
-    
-    // Pick Image
-    const pickImage = document.createElement("img")
-    pickImage.setAttribute("src", `static/${team === "red" ? "left" : "right"}-pick.png`)
+    // Check which tile
+    let currentTile
+    if (team === "red") {
+        for (let i = 0; i < mappoolSectionLeftEl.childElementCount; i++) {
+            if (!mappoolSectionLeftEl.children[i].dataset.mappoolSectionId) {
+                currentTile = mappoolSectionLeftEl.children[i]
+                break
+            }
+        }
+    } else {
+        for (let i = 0; i < mappoolSectionRightEl.childElementCount; i++) {
+            if (!mappoolSectionRightEl.children[i].dataset.mappoolSectionId) {
+                currentTile = mappoolSectionRightEl.children[i]
+                break
+            }
+        }
+    }
+    if (!currentTile) return
 
-    // Map Card Background
-    const mapCardBackground = document.createElement("div")
-    mapCardBackground.classList.add("map-card-background")
-    mapCardBackground.style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${allBeatmapsJsonMap.beatmapset_id}/covers/cover.jpg")`
-
-    // Map Details
-    const mapDetails = document.createElement("div")
-    mapDetails.classList.add("map-details")
-    // Song Name
-    const songName = document.createElement("div")
-    songName.classList.add("song-name")
-    songName.innerText = allBeatmapsJsonMap.title
-    // Song Artist
-    const songArtist = document.createElement("div")
-    songArtist.classList.add("song-artist")
-    songArtist.innerText = allBeatmapsJsonMap.artist
-    mapDetails.append(songName, songArtist)
-
-    // Mod ID
-    const modId = document.createElement("div")
-    modId.classList.add("mod-id")
-    modId.classList.add(`mod-id-${allBeatmapsMap.mod.toLowerCase()}`)
-    // Mod Mask
-    const modMask = document.createElement("img")
-    modMask.classList.add("mod-mask")
-    modMask.setAttribute("src", "static/mask.png")
-    // Mod Text
-    const modText = document.createElement("div")
-    modText.classList.add("mod-text")
-    modText.innerText = `${allBeatmapsMap.mod.toUpperCase()}${allBeatmapsMap.order}`
-    modId.append(modMask, modText)
-
-    // Song Mapper
-    const songMapper = document.createElement("div")
-    songMapper.classList.add("song-mapper")
-    // Song Mapper Name
-    const songMapperName = document.createElement("span")
-    songMapperName.classList.add("map-detail-lime-bold")
-    songMapperName.innerText = allBeatmapsJsonMap.creator
-    songMapper.append("mapped by ", songMapperName)
-
-    // Star Rating
-    const starRating = document.createElement("div")
-    starRating.classList.add("star-rating")
-    // Star Rating Number
-    const starRatingNumber = document.createElement("span")
-    starRatingNumber.classList.add("map-detail-lime-bold")
-    starRatingNumber.innerText = `${Math.round(Number(allBeatmapsJsonMap.difficultyrating) * 100) / 100}`
-    starRating.append("star rating // ", starRatingNumber)
-
-    // Map Card Action
-    const mapCardAction = document.createElement("div")
-    mapCardAction.classList.add("map-card-action")
-    // Map Card Action Tasks
-    const mapActionText = document.createElement("div")
+    // Set details of the tile
+    currentTile.style.display = "block"
+    currentTile.dataset.mappoolSectionId = allBeatmapsJsonMap.beatmap_id
+    currentTile.children[1].style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${allBeatmapsJsonMap.beatmapset_id}/covers/cover.jpg")`
+    currentTile.children[2].children[0].innerText = allBeatmapsJsonMap.title
+    currentTile.children[2].children[1].innerText = allBeatmapsJsonMap.artist
+    currentTile.children[3].children[1].innerText = allBeatmapsMap.mod + allBeatmapsMap.order
+    currentTile.children[4].children[0].innerText = allBeatmapsJsonMap.creator
+    currentTile.children[5].children[0].innerText = `${Math.round(Number(allBeatmapsJsonMap.difficultyrating) * 100) / 100}`
+    let mapActionText = currentTile.children[6].children[0]
     if (action === "pick") {
         mapActionText.classList.add("map-card-win-text")
         mapActionText.innerText = "WIN"
-        mapCardAction.style.display = "none"
+        currentTile.children[6].style.display = "none"
     } else if (action === "ban") {
         mapActionText.classList.add("map-card-ban-text", `map-card-colour-${team === "red"? "pink" : "blue"}`)
         mapActionText.innerText = "B&"
@@ -205,13 +244,6 @@ function mapClickEvent(event) {
         mapActionText.classList.add("map-card-ban-text", `map-card-colour-${team === "red"? "pink" : "blue"}`)
         mapActionText.innerText = "P#"
     }
-    mapCardAction.append(mapActionText)
-    mapCard.append(pickImage, mapCardBackground, mapDetails, modId, songMapper, starRating, mapCardAction)
-    
-    const mappoolSectionElement = (team === "red")? mappoolSectionLeftEl : mappoolSectionRightEl
-    mappoolSectionElement.append(mapCard)
-
-    if (action === "pick") lastPickedTile = mapCard
 
     // Scroll the mappool section
     mappoolSectionEl.scrollTop = mappoolSectionEl.scrollHeight
