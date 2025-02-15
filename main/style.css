@@ -1,3 +1,13 @@
+/* Background Video */
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3840px;
+    height: 2160px;
+    z-index: -1;
+}
+
 body { margin: 0; }
 .main {
     position: relative;
@@ -202,6 +212,13 @@ body { margin: 0; }
     background-image: url("https://assets.ppy.sh/beatmaps/789103/covers/cover.jpg");
     background-size: cover;
     background-position: center;
+}
+.current-map-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3840px;
+    height: 2160px;
 }
 .now-playing-current-map-text {
     position: absolute;

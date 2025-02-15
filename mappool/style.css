@@ -24,6 +24,15 @@ body {
     font-weight: 700;
 }
 
+/* Background Video */
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2560px;
+    height: 1440px;
+}
+
 #main {
     position: absolute;
     top: 0;
