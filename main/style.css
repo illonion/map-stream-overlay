@@ -200,6 +200,19 @@ body { margin: 0; }
 }
 #now-playing-stats-underscore-bpm { width: 257px; }
 
+/* Score Difference */
+.play-score-difference {
+    position: absolute;
+    top: 1765px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 4em;
+    width: 550px;
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Current Map */
 .now-playing-map-background {
     position: absolute;
@@ -207,7 +220,7 @@ body { margin: 0; }
     left: 50%;
     transform: translateX(-50%);
     width: 668px;
-    height: 372px;
+    height: 272px;
     border-radius: 34px 34px 0 0;
     background-image: url("https://assets.ppy.sh/beatmaps/789103/covers/cover.jpg");
     background-size: cover;
@@ -222,7 +235,7 @@ body { margin: 0; }
 }
 .now-playing-current-map-text {
     position: absolute;
-    top: 1770px;
+    top: 1860px;
     left: 1625px;
     background-color: var(--blue);
     color: white;

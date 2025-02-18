@@ -114,6 +114,12 @@ const baseScoreBarMaxScore = 4000000;
 let currentScoreBarMaxScore;
 const EZMultiplier = 2;
 
+// Play Score Difference
+const playScoreDifferenceLeftArrow = document.getElementById("player-score-difference-left-arrow");
+const playScoreDifference = document.getElementById("play-score-difference");
+const playScoreDifferenceRightArrow = document.getElementById("play-score-difference-right-arrow");
+let currentPlayScoreDifference = 0, playScoreDifferenceAnimationFrame;
+
 // Stats
 const nowPlayingStatsCSEl = document.getElementById("now-playing-stats-cs");
 const nowPlayingStatsODEl = document.getElementById("now-playing-stats-od");
@@ -191,6 +197,10 @@ socket.onmessage = event => {
         // Animate score
         animateScore("left", currentScoreLeft);
         animateScore("right", currentScoreRight);
+
+        let currentPlayScoreDifference = Math.abs(currentScoreLeft - currentScoreRight);
+
+        animateScoreDifference(currentPlayScoreDifference);
     }
 
     // Beatmap information
@@ -328,4 +338,40 @@ function animateScore(side, score) {
 
     // Start the animation
     updateScore();
+}
+
+function animateScoreDifference(score) {
+    // Calculate the difference and the number of frames
+    const frames = animationDuration / frameTime;
+    targetScore = score
+    const scoreIncrement = (targetScore - currentPlayScoreDifference) / frames;
+
+    // Cancel any previous animation frame to reset the animation
+    cancelAnimationFrame(playScoreDifferenceAnimationFrame);
+
+    // Define function to update the score difference each frame
+    function updateScore() {
+        currentPlayScoreDifference += scoreIncrement;
+        if (currentPlayScoreDifference > targetScore) currentPlayScoreRight = targetScore
+        playScoreDifference.innerText = Math.round(currentPlayScoreDifference).toLocaleString();
+
+        // Set arrow display
+        if (currentPlayScoreLeft > currentPlayScoreRight) {
+            playScoreDifferenceLeftArrow.style.opacity = 1
+            playScoreDifferenceRightArrow.style.opacity = 0
+        } else if (currentPlayScoreLeft === currentPlayScoreRight) {
+            playScoreDifferenceLeftArrow.style.opacity = 0
+            playScoreDifferenceRightArrow.style.opacity = 0
+        } else {
+            playScoreDifferenceLeftArrow.style.opacity = 0
+            playScoreDifferenceRightArrow.style.opacity = 1
+        }
+
+        // Continue animation
+        if (currentPlayScoreDifference !== targetScore) {
+            playScoreDifferenceAnimationFrame = requestAnimationFrame(updateScore)
+        }
+    }
+
+    updateScore()
 }
