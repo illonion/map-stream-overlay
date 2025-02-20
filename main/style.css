@@ -14,7 +14,6 @@ body { margin: 0; }
     margin: 0;
     width: 3840px;
     height: 2160px;
-    background-image: url("static/background.png");
     font-family: "Reddit Mono";
     font-weight: 800;
     overflow: hidden;

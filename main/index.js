@@ -164,11 +164,6 @@ socket.onmessage = event => {
     // Update team names
     currentTeamNameLeft = updateTeamName(currentTeamNameLeft, data.tourney.manager.teamName.left, teamNameLeftEl, teamNameHighlightLeftEl);
     currentTeamNameRight = updateTeamName(currentTeamNameRight, data.tourney.manager.teamName.right, teamNameRightEl, teamNameHighlightRightEl);
-
-    // Score visibility
-    if (scoreVisibility !== data.tourney.manager.bools.scoreVisible) {
-        scoreVisibility = data.tourney.manager.bools.scoreVisible;
-    }
     
     // Star visibility
     if (starVisibility !== data.tourney.manager.bools.starsVisible) {
@@ -182,26 +177,22 @@ socket.onmessage = event => {
         }
     }
 
-    if (scoreVisibility) {
-        // Get scores for both sides
-        let scores = [];
-        let currentScoreLeft = 0;
-        let currentScoreRight = 0;
-        for (let i = 0; i < data.tourney.ipcClients.length; i++) {
-            let score = data.tourney.ipcClients[i].gameplay.score;
-            if (data.tourney.ipcClients[i].gameplay.mods.str.toUpperCase().includes('EZ')) score *= EZMultiplier;
-            if (i < teamSize) currentScoreLeft += score;
-            else currentScoreRight += score;
-        }
-
-        // Animate score
-        animateScore("left", currentScoreLeft);
-        animateScore("right", currentScoreRight);
-
-        let currentPlayScoreDifference = Math.abs(currentScoreLeft - currentScoreRight);
-
-        animateScoreDifference(currentPlayScoreDifference);
+    // Get scores for both sides
+    let currentScoreLeft = 0;
+    let currentScoreRight = 0;
+    for (let i = 0; i < data.tourney.ipcClients.length; i++) {
+        let score = data.tourney.ipcClients[i].gameplay.score;
+        if (data.tourney.ipcClients[i].gameplay.mods.str.toUpperCase().includes('EZ')) score *= EZMultiplier;
+        if (i < data.tourney.ipcClients.length / 2) currentScoreLeft += score;
+        else currentScoreRight += score;
     }
+
+    // Animate score
+    animateScore("left", currentScoreLeft);
+    animateScore("right", currentScoreRight);
+
+    let currentPlayScoreDifference = Math.abs(currentScoreLeft - currentScoreRight);
+    animateScoreDifference(currentPlayScoreDifference);
 
     // Beatmap information
     if (currentBeatmapId !== data.menu.bm.id || currentBeatmapMd5 !== data.menu.bm.md5) {
@@ -348,11 +339,11 @@ function animateScoreDifference(score) {
 
     // Cancel any previous animation frame to reset the animation
     cancelAnimationFrame(playScoreDifferenceAnimationFrame);
-
+    
     // Define function to update the score difference each frame
-    function updateScore() {
+    function updateScoreDifference() {
         currentPlayScoreDifference += scoreIncrement;
-        if (currentPlayScoreDifference > targetScore) currentPlayScoreRight = targetScore
+        if (currentPlayScoreDifference > targetScore) currentPlayScoreDifference = targetScore
         playScoreDifference.innerText = Math.round(currentPlayScoreDifference).toLocaleString();
 
         // Set arrow display
@@ -362,16 +353,16 @@ function animateScoreDifference(score) {
         } else if (currentPlayScoreLeft === currentPlayScoreRight) {
             playScoreDifferenceLeftArrow.style.opacity = 0
             playScoreDifferenceRightArrow.style.opacity = 0
-        } else {
+        } else if (currentPlayScoreLeft < currentPlayScoreRight) {
             playScoreDifferenceLeftArrow.style.opacity = 0
             playScoreDifferenceRightArrow.style.opacity = 1
         }
 
         // Continue animation
         if (currentPlayScoreDifference !== targetScore) {
-            playScoreDifferenceAnimationFrame = requestAnimationFrame(updateScore)
+            playScoreDifferenceAnimationFrame = requestAnimationFrame(updateScoreDifference)
         }
     }
 
-    updateScore()
+    updateScoreDifference()
 }

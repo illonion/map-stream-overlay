@@ -226,6 +226,7 @@ function mapClickEvent(event) {
     currentTile.children[1].style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${allBeatmapsJsonMap.beatmapset_id}/covers/cover.jpg")`
     currentTile.children[2].children[0].innerText = allBeatmapsJsonMap.title
     currentTile.children[2].children[1].innerText = allBeatmapsJsonMap.artist
+    currentTile.children[3].classList.add(`mod-id-${allBeatmapsMap.mod.toLowerCase()}`)
     currentTile.children[3].children[1].innerText = allBeatmapsMap.mod + allBeatmapsMap.order
     currentTile.children[4].children[0].innerText = allBeatmapsJsonMap.creator
     currentTile.children[5].children[0].innerText = `${Math.round(Number(allBeatmapsJsonMap.difficultyrating) * 100) / 100}`
@@ -245,8 +246,12 @@ function mapClickEvent(event) {
     // Scroll the mappool section
     mappoolSectionEl.scrollTop = mappoolSectionEl.scrollHeight
 
-    previousPickedTile = currentPickedTile
-    currentPickedTile = currentTile
+    if (action === "pick") {
+        previousPickedTile = currentPickedTile
+        currentPickedTile = currentTile
+    }
+
+    console.log(currentPickedTile)
 }
 
 // Change first pick bans
@@ -299,10 +304,11 @@ setInterval(() => {
     const winnerOfMap = getCookie("currentWinner")
     if (currentPickedTile && winnerOfMap !== "none" && winnerOfMap) {
         currentPickedTile.children[6].style.display = "block"
+        console.log(winnerOfMap)
         if (winnerOfMap === "left") {
-            currentPickedTile.children[6].children[1].classList.add("map-card-colour-pink")
-        } else {
-            currentPickedTile.children[6].children[1].classList.add("map-card-colour-blue")
+            currentPickedTile.children[6].children[0].classList.add("map-card-colour-pink")
+        } else if (winnerOfMap === "right"){
+            currentPickedTile.children[6].children[0].classList.add("map-card-colour-blue")
         }
         document.cookie = "currentWinner=none; path=/"
     }
@@ -315,7 +321,7 @@ setInterval(() => {
         previousPickedTile = currentPickedTile
         currentPickedTile = tbCardMapIndividual
         tbCardMapIndividual.style.display = "block"
-    } else {
+    } else if (window.getComputedStyle(tbCardMapIndividual).display === "block") {
         currentPickedTile = previousPickedTile
         tbCardMapIndividual.style.display = "none"
     }
@@ -378,13 +384,13 @@ socket.onmessage = event => {
     console.log(data)
 
     // Team Data
-    if (currentLeftTeamName !== data.tourney.manager.teamName.left.trim()) {
+    if (allTeams && currentLeftTeamName !== data.tourney.manager.teamName.left.trim()) {
         currentLeftTeamName = data.tourney.manager.teamName.left.trim()
         leftTeamName.innerText = currentLeftTeamName
         currentLeftTeamPlayers = findTeam(currentLeftTeamName)
         if (currentLeftTeamPlayers) leftTeamBanner.setAttribute("src", currentLeftTeamPlayers.team_icon)
     }
-    if (currentRightTeamName !== data.tourney.manager.teamName.right.trim()) {
+    if (allTeams && currentRightTeamName !== data.tourney.manager.teamName.right.trim()) {
         currentRightTeamName = data.tourney.manager.teamName.right.trim()
         rightTeamName.innerText = currentRightTeamName
         currentRightTeamPlayers = findTeam(currentRightTeamName)
@@ -499,6 +505,7 @@ socket.onmessage = event => {
 
         chatDisplay.append(fragment)
         chatLen = data.tourney.manager.chat.length
+        console.log("scroll to bottom THANK YOU")
         chatDisplay.scrollTop = chatDisplay.scrollHeight
     }
 }

@@ -260,7 +260,7 @@ body {
 /* Mod ID */
 .mod-id {
     position: absolute;
-    top: 24px;
+    top: 15px;
     left: 567px;
     width: 50px;
     height: 50px;
@@ -304,10 +304,10 @@ body {
 /* Mapper */
 .song-mapper {
     position: absolute;
-    top: 86px;
+    top: 75px;
     right: 46px;
     color: white;
-    font-size: 14px;
+    font-size: 21px;
     font-weight: 400;
 }
 .tb-song-mapper {
@@ -321,10 +321,10 @@ body {
 /* Star Rating */
 .star-rating {
     position: absolute;
-    top: 109px;
+    top: 104px;
     right: 46px;
     color: white;
-    font-size: 14px;
+    font-size: 21px;
     font-weight: 400;
 }
 .tb-star-rating {
@@ -386,6 +386,8 @@ body {
     width: 1200px;
     height: 250px;
     border-radius: 25px 25px 0 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 .chat-display::-webkit-scrollbar { display: none; }
 /* Message Container */
