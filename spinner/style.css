@@ -291,13 +291,14 @@
     top: -94px;
     transform: rotate(4.83deg);
     width: 2676px;
-    filter: blur(0px);
+    filter: blur(81.5px);
     transition: 500ms ease;
     overflow: hidden;
 }
 .osu-background-video {
     position: relative;
-    left: -15%;
+    left: -50%;
+    transform: translateX(25%);
     width: 2676px;
 }
 

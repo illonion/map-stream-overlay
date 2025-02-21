@@ -447,8 +447,10 @@ socket.onmessage = event => {
         let currentChild
         if (currentTeam === "left" && leftTeamPlayerCount < 4) {
             currentChild = leftTeamPlayerList.children[leftTeamPlayerCount]
+            leftTeamPlayerCount++
         } else if (currentTeam === "right" && rightTeamPlayerCount < 4) {
             currentChild = rightTeamPlayerList.children[rightTeamPlayerCount]
+            rightTeamPlayerCount++
         }
 
         // If no child
@@ -457,14 +459,11 @@ socket.onmessage = event => {
         // Set attributes
         currentChild.children[0].setAttribute("src", `https://a.ppy.sh/${currentUserId}`)
         currentChild.children[1].innerText = data.tourney.ipcClients[i].spectating.name
+        currentChild.style.display = "block"
     }
 
-    for (let i = leftTeamPlayerCount; i < 4; i++) {
-        leftTeamPlayerList.children[i].style.display = "none"
-    }
-    for (let i = rightTeamPlayerCount; i < 4; i++) {
-        rightTeamPlayerList.children[i].style.display = "none"
-    }
+    for (let i = leftTeamPlayerCount; i < 4; i++) leftTeamPlayerList.children[i].style.display = "none"
+    for (let i = rightTeamPlayerCount; i < 4; i++) rightTeamPlayerList.children[i].style.display = "none"
 
     // This is also mostly taken from Victim Crasher: https://github.com/VictimCrasher/static/tree/master/WaveTournament
     if (chatLen !== data.tourney.manager.chat.length) {
