@@ -376,7 +376,7 @@ let leftTeamPlayerCount = 0
 let rightTeamPlayerCount = 0
 
 // Chat Display
-const chatDisplay = document.getElementById("chat-display")
+const chatDisplay = document.getElementById("chat-display-inside")
 let chatLen = 0
 
 socket.onmessage = event => {
@@ -477,15 +477,6 @@ socket.onmessage = event => {
             const chatMessageContainer = document.createElement("div")
             chatMessageContainer.classList.add("message-container")
 
-            // Time
-            const chatDisplayTime = document.createElement("div")
-            chatDisplayTime.classList.add("message-time")
-            chatDisplayTime.innerText = data.tourney.manager.chat[i].time
-
-            // Whole Message
-            const chatDisplayWholeMessage = document.createElement("div")
-            chatDisplayWholeMessage.classList.add("message-wrapper")  
-
             // Name
             const chatDisplayName = document.createElement("span")
             chatDisplayName.classList.add("message-name")
@@ -497,8 +488,7 @@ socket.onmessage = event => {
             chatDisplayMessage.classList.add("message-content")
             chatDisplayMessage.innerText = data.tourney.manager.chat[i].messageBody
 
-            chatDisplayWholeMessage.append(chatDisplayName, chatDisplayMessage)
-            chatMessageContainer.append(chatDisplayTime, chatDisplayWholeMessage)
+            chatMessageContainer.append(chatDisplayName, chatDisplayMessage)
             fragment.append(chatMessageContainer)
         }
 
