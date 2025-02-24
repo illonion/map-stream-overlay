@@ -112,7 +112,7 @@ const frameTime = 1000 / fps;
 let currentPlayScoreLeft = 0, currentPlayScoreRight = 0, animationFrame;
 const baseScoreBarMaxScore = 4000000;
 let currentScoreBarMaxScore;
-const EZMultiplier = 2;
+const EZMultiplier = 1.8;
 
 // Play Score Difference
 const playScoreDifferenceLeftArrow = document.getElementById("player-score-difference-left-arrow");
