@@ -131,9 +131,11 @@ let currentBeatmapId, currentBeatmapMd5, updateStats = false;
 const nowPlayingMapBackgroundEl = document.getElementById("now-playing-map-background");
 
 // Now Playing Metadata
+const nowPlayingBottomLine = document.getElementById("now-playing-bottom-line")
 const nowPlayingSongTitleEl = document.getElementById("now-playing-song-title");
 const nowPlayingArtist = document.getElementById("now-playing-artist");
 const nowPlayingMapperName = document.getElementById("now-playing-mapper-name");
+const nowPlayingMapperDifficulty = document.getElementById("now-playing-mapper-difficulty")
 
 // IPC State
 let ipcState, pointAdded = false, updateStars = false;
@@ -250,6 +252,10 @@ socket.onmessage = event => {
         nowPlayingSongTitleEl.innerText = data.menu.bm.metadata.title;
         nowPlayingArtist.innerText = data.menu.bm.metadata.artist;
         nowPlayingMapperName.innerText = data.menu.bm.metadata.mapper;
+        nowPlayingMapperDifficulty.innerText = `[${data.menu.bm.metadata.difficulty}]`;
+        const nowPlayingMapperDifficultyStartLeft = nowPlayingBottomLine.getBoundingClientRect().width + 2738
+        nowPlayingMapperDifficulty.style.left = `${nowPlayingMapperDifficultyStartLeft}px`
+        nowPlayingMapperDifficulty.style.maxWidth = `${3300 - nowPlayingMapperDifficultyStartLeft}px`
         
         updateStats = false;
     }

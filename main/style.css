@@ -279,33 +279,42 @@ body { margin: 0; }
     border-radius: 27px;
     background-color: var(--red);
     color: white;
-    width: 216px;
+    width: 287px;
     height: 53px;
     line-height: 53px;
     text-align: center;
     font-size: 42px;
     font-weight: 700;
 }
-.now-playing-mapper-circle {
+
+/* Now Playing Bottom Line */
+.now-playing-bottom-line {
     position: absolute;
-    top: 1994px;
-    left: 2630px;
+    top: 1974px;
+    left: 2695px;
+    display: flex;
+    gap: 38px;
+    font-size: 42px;
+    line-height: 55px;
+    color: white;
+}
+.now-playing-mapper-circle {
+    margin-top: 20px;
     width: 12px;
     height: 12px;
     border-radius: 6px;
     background-color: white;
+    font-size: 0;
 }
-.now-playing-mapper-name {
-    position: absolute; 
+.now-playing-mapper-difficulty {
+    position: absolute;
     top: 1974px;
-    left: 2686px;
-    font-size: 42px;
-    line-height: 55px;
-    color: white;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 600px;
+    font-size: 42px;
+    line-height: 55px;
+    color: white;
 }
 
 /* Sidebar */
