@@ -253,9 +253,11 @@ socket.onmessage = event => {
         nowPlayingArtist.innerText = data.menu.bm.metadata.artist;
         nowPlayingMapperName.innerText = data.menu.bm.metadata.mapper;
         nowPlayingMapperDifficulty.innerText = `[${data.menu.bm.metadata.difficulty}]`;
-        const nowPlayingMapperDifficultyStartLeft = nowPlayingBottomLine.getBoundingClientRect().width + 2738
-        nowPlayingMapperDifficulty.style.left = `${nowPlayingMapperDifficultyStartLeft}px`
-        nowPlayingMapperDifficulty.style.maxWidth = `${3300 - nowPlayingMapperDifficultyStartLeft}px`
+        if (nowPlayingBottomLine.getBoundingClientRect().width > 900) {
+            nowPlayingBottomLine.classList.add("now-playing-bottom-line-wrap")
+        } else { 
+            nowPlayingBottomLine.classList.remove("now-playing-bottom-line-wrap")
+        }
         
         updateStats = false;
     }
