@@ -51,6 +51,7 @@ async function getMappool() {
         else if (allBeatmaps[i].mod === "DT") modNumber = 64
         
         // Get API response
+        console.log("https://corsproxy.io/?" + encodeURIComponent(`https://osu.ppy.sh/api/get_beatmaps?k=${osuApi}&b=${allBeatmaps[i].beatmapId}&mods=${modNumber}`))
         const response = await fetch("https://corsproxy.io/?" + encodeURIComponent(`https://osu.ppy.sh/api/get_beatmaps?k=${osuApi}&b=${allBeatmaps[i].beatmapId}&mods=${modNumber}`))
         await delay(1000)
         let responseJson = await response.json()
@@ -709,6 +710,8 @@ function setTile() {
     currentTile.children[1].style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${currentMapJson.beatmapset_id}/covers/cover.jpg")`
     currentTile.children[2].children[0].innerText = currentMapJson.title
     currentTile.children[2].children[1].innerText = currentMapJson.artist
+    currentTile.children[3].classList.remove(`mod-id-nm`, "mod-id-hd", "mod-id-hr", "mod-id-dt", "mod-id-fm", "mod-id-tb")
+    currentTile.children[3].classList.add(`mod-id-${currentMap.mod.toLowerCase()}`)
     currentTile.children[3].children[1].innerText = currentMap.mod + currentMap.order
     currentTile.children[4].children[0].innerText = currentMapJson.creator
     currentTile.children[5].children[0].innerText = `${Math.round(Number(currentMapJson.difficultyrating) * 100) / 100}`
@@ -747,6 +750,7 @@ function setWinner() {
     const currentTile = (currentSidebarTeam === "R")? mappoolSectionLeftEl.children[currentSidebarTileNumber] : mappoolSectionRightEl.children[currentSidebarTileNumber]
     currentTile.children[6].style.display = "block"
     currentTile.children[6].children[0].classList.add(`map-card-colour-${setTeamSelect.value === "red"? "pink" : "blue"}`)
+    currentTile.children[6].children[0].classList.remove(`map-card-colour-${setTeamSelect.value === "red"? "blue" : "pink"}`)
 }
 
 // Remove winner

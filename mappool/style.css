@@ -172,7 +172,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 1342px;
-    max-height: 1000px;
+    max-height: 940px;
     overflow: hidden;
     overflow-y: scroll;
     display: flex;
@@ -242,6 +242,7 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 480px;
 }
 .tb-song-name {
     font-size: 40px;
