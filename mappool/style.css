@@ -171,9 +171,8 @@ body {
     top: 192px;
     left: 50%;
     transform: translateX(-50%);
-    width: 1342px;
+    width: 1422px;
     max-height: 940px;
-    overflow: hidden;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
@@ -183,6 +182,10 @@ body {
     display: flex;
     justify-content: space-between;
 }
+#mappool-section-left, #mappool-section-right {
+    padding: 20px;
+    box-sizing: content-box;
+}
 /* Map Card Background*/
 .map-card {
     position: relative;
@@ -190,8 +193,7 @@ body {
     height: 147px;
     border-radius: 59px;
     margin-bottom: 15px;
-    overflow: hidden;
-    box-shadow: 7px 4px 20px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 7px 4px 20px rgba(0, 0, 0, 0.5);
 }
 .tb-map-card-container {
     display: none;

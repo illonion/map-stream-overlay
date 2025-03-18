@@ -45,21 +45,9 @@ async function getMappool() {
     // Create side bar mappool buttons
     sideBarMappoolEl.innerHTML = ""
     for (let i = 0; i < allBeatmaps.length; i++) {
-        // Set mod number
-        let modNumber = 0
-        if (allBeatmaps[i].mod === "HR") modNumber = 16
-        else if (allBeatmaps[i].mod === "DT") modNumber = 64
-        
-        // Get API response
-        console.log("https://corsproxy.io/?" + encodeURIComponent(`https://osu.ppy.sh/api/get_beatmaps?k=${osuApi}&b=${allBeatmaps[i].beatmapId}&mods=${modNumber}`))
-        const response = await fetch("https://corsproxy.io/?" + encodeURIComponent(`https://osu.ppy.sh/api/get_beatmaps?k=${osuApi}&b=${allBeatmaps[i].beatmapId}&mods=${modNumber}`))
-        await delay(1000)
-        let responseJson = await response.json()
-        allBeatmapsJson.push(responseJson[0])
-
         const sideBarMappoolButton = document.createElement("button")
         sideBarMappoolButton.classList.add("side-bar-button", "side-bar-mappool-button")
-        sideBarMappoolButton.setAttribute("data-id", allBeatmaps[i].beatmapId)
+        sideBarMappoolButton.setAttribute("data-id", allBeatmaps[i].beatmap_id)
         sideBarMappoolButton.addEventListener("mousedown", mapClickEvent)
         sideBarMappoolButton.addEventListener("contextmenu", function(event) {event.preventDefault()})
         sideBarMappoolButton.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
@@ -67,7 +55,7 @@ async function getMappool() {
     }
 
     // Set tb map info directly
-    const tbMap = findMapInAllBeatmapsJson(allBeatmaps[allBeatmaps.length - 1].beatmapId)
+    const tbMap = findMapInAllBeatmaps(allBeatmaps[allBeatmaps.length - 1].beatmap_id)
     console.log(tbMap)
     tbCardMapIndividual.children[1].style.backgroundImage = `url(https://assets.ppy.sh/beatmaps/${tbMap.beatmapset_id}/covers/cover.jpg)`
     tbCardMapIndividual.children[4].children[0].innerText = tbMap.title
@@ -76,8 +64,7 @@ async function getMappool() {
     tbCardMapIndividual.children[7].children[0].innerText = `${Math.round(Number(tbMap.difficultyrating) * 100) / 100}*`
 }
 
-const findMapInAllBeatmaps = beatmapId => allBeatmaps.find(beatmap => beatmap.beatmapId == beatmapId)
-const findMapInAllBeatmapsJson = beatmapId => allBeatmapsJson.find(beatmap => beatmap.beatmap_id == beatmapId)
+const findMapInAllBeatmaps = beatmap_id => allBeatmaps.find(beatmap => beatmap.beatmap_id == beatmap_id)
 
 // Create all panels
 function createPanels(team) {
@@ -197,10 +184,9 @@ function mapClickEvent(event) {
 
     // Find map
     const allBeatmapsMap = findMapInAllBeatmaps(this.dataset.id)
-    const allBeatmapsJsonMap = findMapInAllBeatmapsJson(this.dataset.id)
 
-    console.log(this.dataset.id, allBeatmapsMap, allBeatmapsJsonMap)
-    if (!allBeatmapsMap || !allBeatmapsJsonMap) return
+    console.log(this.dataset.id, allBeatmapsMap, allBeatmapsMap)
+    if (!allBeatmapsMap || !allBeatmapsMap) return
 
     // Check which tile
     let currentTile
@@ -223,14 +209,14 @@ function mapClickEvent(event) {
 
     // Set details of the tile
     currentTile.style.display = "block"
-    currentTile.dataset.mappoolSectionId = allBeatmapsJsonMap.beatmap_id
-    currentTile.children[1].style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${allBeatmapsJsonMap.beatmapset_id}/covers/cover.jpg")`
-    currentTile.children[2].children[0].innerText = allBeatmapsJsonMap.title
-    currentTile.children[2].children[1].innerText = allBeatmapsJsonMap.artist
+    currentTile.dataset.mappoolSectionId = allBeatmapsMap.beatmap_id
+    currentTile.children[1].style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${allBeatmapsMap.beatmapset_id}/covers/cover.jpg")`
+    currentTile.children[2].children[0].innerText = allBeatmapsMap.title
+    currentTile.children[2].children[1].innerText = allBeatmapsMap.artist
     currentTile.children[3].classList.add(`mod-id-${allBeatmapsMap.mod.toLowerCase()}`)
     currentTile.children[3].children[1].innerText = allBeatmapsMap.mod + allBeatmapsMap.order
-    currentTile.children[4].children[0].innerText = allBeatmapsJsonMap.creator
-    currentTile.children[5].children[0].innerText = `${Math.round(Number(allBeatmapsJsonMap.difficultyrating) * 100) / 100}`
+    currentTile.children[4].children[0].innerText = allBeatmapsMap.creator
+    currentTile.children[5].children[0].innerText = `${Math.round(Number(allBeatmapsMap.difficultyrating) * 100) / 100}`
     let mapActionText = currentTile.children[6].children[0]
     if (action === "pick") {
         mapActionText.classList.add("map-card-win-text")
@@ -537,7 +523,7 @@ function mappoolManagementSelect(element) {
             for (let i = 0; i < allBeatmaps.length; i++) {
                 const button = document.createElement("button")
                 button.classList.add("tile-mod-id-button")
-                button.setAttribute("onclick", `selectModId(${allBeatmaps[i].beatmapId},this)`)
+                button.setAttribute("onclick", `selectModId(${allBeatmaps[i].beatmap_id},this)`)
                 button.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
                 whichPickConttainer.append(button)
             }
@@ -701,20 +687,19 @@ function setTile() {
     // Find map and tile
     console.log(currentSidebarModId, currentSidebarTeam, currentSidebarTileNumber, setActionSelect.value)
     const currentMap = findMapInAllBeatmaps(currentSidebarModId)
-    const currentMapJson = findMapInAllBeatmapsJson(currentSidebarModId)
     const currentTile = (currentSidebarTeam === "R")? mappoolSectionLeftEl.children[currentSidebarTileNumber] : mappoolSectionRightEl.children[currentSidebarTileNumber]
     
     // Apply information
     currentTile.style.display = "block"
-    currentTile.dataset.mappoolSectionId = currentMapJson.beatmap_id
-    currentTile.children[1].style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${currentMapJson.beatmapset_id}/covers/cover.jpg")`
-    currentTile.children[2].children[0].innerText = currentMapJson.title
-    currentTile.children[2].children[1].innerText = currentMapJson.artist
+    currentTile.dataset.mappoolSectionId = currentMap.beatmap_id
+    currentTile.children[1].style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${currentMap.beatmapset_id}/covers/cover.jpg")`
+    currentTile.children[2].children[0].innerText = currentMap.title
+    currentTile.children[2].children[1].innerText = currentMap.artist
     currentTile.children[3].classList.remove(`mod-id-nm`, "mod-id-hd", "mod-id-hr", "mod-id-dt", "mod-id-fm", "mod-id-tb")
     currentTile.children[3].classList.add(`mod-id-${currentMap.mod.toLowerCase()}`)
     currentTile.children[3].children[1].innerText = currentMap.mod + currentMap.order
-    currentTile.children[4].children[0].innerText = currentMapJson.creator
-    currentTile.children[5].children[0].innerText = `${Math.round(Number(currentMapJson.difficultyrating) * 100) / 100}`
+    currentTile.children[4].children[0].innerText = currentMap.creator
+    currentTile.children[5].children[0].innerText = `${Math.round(Number(currentMap.difficultyrating) * 100) / 100}`
     let mapActionText = currentTile.children[6].children[0]
     if (setActionSelect.value === "setPick") {
         mapActionText.classList.add("map-card-win-text")
